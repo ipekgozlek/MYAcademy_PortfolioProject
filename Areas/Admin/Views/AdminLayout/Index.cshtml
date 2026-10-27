@@ -1,0 +1,26 @@
+﻿@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html lang="tr">
+@await Component.InvokeAsync("_AdminLayoutHeadComponentPartial")
+<body>
+
+  <!-- ==================== DESKTOP FIXED SIDEBAR ==================== -->
+  @await Component.InvokeAsync("_AdminLayoutSidebarComponentPartial")
+
+
+  
+  <!-- ==================== MOBILE OFFCANVAS SIDEBAR ==================== -->
+    @await Component.InvokeAsync("_AdminLayoutMobileSidebarComponentPartial")
+
+    @RenderBody()
+
+
+  <!-- Bootstrap 5.3 Bundle JS (with Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+ @await Component.InvokeAsync("_AdminLayoutScriptComponentPartial")
+</body>
+</html>
