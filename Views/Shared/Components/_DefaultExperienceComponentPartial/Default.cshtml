@@ -1,0 +1,52 @@
+﻿@model List<MYAcademy_PortfolioProject.Entities.Experience>
+
+<section id="experience">
+    <div class="container">
+        <div class="text-center mb-5 reveal-on-scroll">
+            <span class="section-eyebrow">PROFESYONEL YOLCULUK</span>
+            <h2 class="section-title">Deneyimlerim</h2>
+            <p class="section-subtitle">Gerçek dünya problemlerini çözerken edindiğim tecrübeler.</p>
+        </div>
+
+        <div class="timeline-container">
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                var item = Model[i];
+                var left = i % 2 == 0;  
+
+                <div class="timeline-item row align-items-center g-4 reveal-on-scroll">
+
+                    @if (!left)
+                    {
+                        <div class="col-lg-6 timeline-left d-none d-lg-block">
+                            <div class="text-secondary small fst-italic">@item.SideTitle</div>
+                        </div>
+                        <div class="timeline-marker"><i class="bi bi-briefcase"></i></div>
+                    }
+
+                    <div class="col-lg-6 @(left ? "timeline-left order-2 order-lg-1" : "timeline-right")">
+                        <div class="timeline-content-card">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <span class="badge-year bg-icon-purple">
+                                    <i class="bi bi-briefcase"></i> @item.Duration
+                                </span>
+                                <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-3 py-1 small">@item.WorkType</span>
+                            </div>
+                            <h4 class="fs-5 fw-bold mb-1">@item.Title</h4>
+                            <div class="text-primary fw-semibold small mb-3">@item.CompanyName</div>
+                            <p class="text-secondary small mb-0" style="line-height: 1.6;">@item.Description</p>
+                        </div>
+                    </div>
+
+                    @if (left)
+                    {
+                        <div class="timeline-marker"><i class="bi bi-briefcase"></i></div>
+                        <div class="col-lg-6 timeline-right order-1 order-lg-2 d-none d-lg-block">
+                            <div class="text-secondary small fst-italic">@item.SideTitle</div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</section>

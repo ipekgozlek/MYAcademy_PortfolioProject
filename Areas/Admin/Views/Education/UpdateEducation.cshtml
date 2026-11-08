@@ -1,0 +1,64 @@
+﻿@model MYAcademy_PortfolioProject.Entities.Education
+@{
+    ViewData["Title"] = "Edit Education";
+    Layout = "~/Areas/Admin/Views/AdminLayout/_AdminLayout.cshtml";
+}
+
+<div class="form-card">
+    <form asp-area="Admin" asp-controller="Education" asp-action="UpdateEducation" method="post">
+       <input type="hidden" asp-for="EducationId" />
+
+        <div class="form-card-header">
+            <div class="form-card-icon"><i class="bi bi-mortarboard"></i></div>
+            <div>
+                <h5 class="mb-0 fw-bold">Edit Education</h5>
+                <small class="text-secondary">Update your education details.</small>
+            </div>
+        </div>
+
+        <div class="form-card-body">
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <label asp-for="Title" class="form-label">School <span class="req">*</span></label>
+                    <input asp-for="Title" class="form-control" placeholder="e.g. Marmara Üniversitesi" required />
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="SubTitle" class="form-label">Department / Degree</label>
+                    <input asp-for="SubTitle" class="form-control" placeholder="e.g. Bilgisayar Mühendisliği — Lisans" />
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Duration" class="form-label">Date Range <span class="req">*</span></label>
+                    <input asp-for="Duration" class="form-control" placeholder="e.g. 2020 – 2024" required />
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Location" class="form-label">Location</label>
+                    <input asp-for="Location" class="form-control" placeholder="e.g. İstanbul, Türkiye" />
+                </div>
+                <div class="col-12">
+                    <label asp-for="Description" class="form-label">Description <span class="req">*</span></label>
+                    <textarea asp-for="Description" class="form-control" rows="4" required></textarea>
+                </div>
+                <div class="col-12">
+                    <div class="status-box">
+                        <div>
+                            <div class="fw-semibold" style="font-size:.86rem;">Publish on website</div>
+                            <small class="text-secondary">Passive records are hidden on the homepage.</small>
+                        </div>
+                        <div class="form-check form-switch m-0">
+                            <input asp-for="IsActive" class="form-check-input" type="checkbox" role="switch" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-card-footer">
+            <a asp-area="Admin" asp-controller="Education" asp-action="EducationList" class="btn btn-soft">
+                <i class="bi bi-arrow-left me-1"></i> Cancel
+            </a>
+            <button type="submit" class="btn btn-accent">
+                <i class="bi bi-check2-circle me-1"></i> Save
+            </button>
+        </div>
+    </form>
+</div>

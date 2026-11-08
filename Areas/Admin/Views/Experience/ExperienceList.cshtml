@@ -1,38 +1,89 @@
 ﻿@model List<MYAcademy_PortfolioProject.Entities.Experience>
 @{
-    ViewData["Title"] = "ExperienceList";
-Layout = "~/Areas/Admin/Views/AdminLayout/_AdminLayout.cshtml";
+    ViewData["Title"] = "Experiences";
+    Layout = "~/Areas/Admin/Views/AdminLayout/_AdminLayout.cshtml";
 }
 
-<link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-<div class="container">
-    <br /><br />
-    <table class="table table-bordered">
-        <tr>
-            <th>#</th>
-            <th>Başlık</th>
-            <th>Alt Başlık</th>
-            <th>Tarih</th>
-            <th>Durum</th>
-            <th>Sil</th>
-            <th>Güncelle</th>
-        </tr>
 
-        @foreach (var item in Model)
-        {
+
+<div class="list-card">
+    <div class="list-card-header">
+        <div class="d-flex align-items-center gap-3">
+            <div class="list-card-icon"><i class="bi bi-briefcase"></i></div>
+            <div>
+                <h5 class="mb-0 fw-bold">Experiences</h5>
+                <small class="text-secondary">Newest first. Passive records are hidden on the website.</small>
+            </div>
+        </div>
+        <a asp-area="Admin" asp-controller="Experience" asp-action="CreateExperience" class="btn btn-accent">
+            <i class="bi bi-plus-lg me-1"></i> New Experience
+        </a>
+    </div>
+
+    <table class="list-table">
+        <thead>
             <tr>
-                <td>@item.ExperienceId</td>
-                <td>@item.Title</td>
-                <td>@item.SideTitle</td>
-                <td>@item.Duration</td>
-                <td>@item.IsActive</td>
-           <td>
-    <a href="/Admin/Experience/DeleteExperience/@item.ExperienceId" class="btn btn-danger">Sil</a>
-</td>
-                <td>
-                    <a href="/Admin/Experience/UpdateExperience/@item.ExperienceId" class="btn btn-success">Güncelle</a>
-                </td>
+                <th>Position / Company</th>
+                <th>Date</th>
+                <th>Work Type</th>
+                <th>Status</th>
+                <th class="text-end">Actions</th>
             </tr>
-        }
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <div class="cell-title">@item.Title</div>
+                        <div class="cell-sub">@item.CompanyName</div>
+                    </td>
+                    <td><span class="date-chip"><i class="bi bi-calendar3"></i> @item.Duration</span></td>
+                    <td><span class="type-chip">@item.WorkType</span></td>
+                    <td>
+                        <a asp-area="Admin" asp-controller="Experience" asp-action="ToggleStatus" asp-route-id="@item.ExperienceId"
+                           class="status-pill @(item.IsActive ? "on" : "off")" title="Click to toggle">
+                            @(item.IsActive ? "Active" : "Passive")
+                        </a>
+                    </td>
+                    <td class="text-end">
+                        <a asp-area="Admin" asp-controller="Experience" asp-action="UpdateExperience" asp-route-id="@item.ExperienceId"
+                           class="icon-btn" title="Edit"><i class="bi bi-pencil"></i></a>
+                        <a asp-area="Admin" asp-controller="Experience" asp-action="DeleteExperience" asp-route-id="@item.ExperienceId"
+                           class="icon-btn danger js-delete" title="Delete"><i class="bi bi-trash3"></i></a> 
+                    </td>
+                </tr>
+            }
+        </tbody>
     </table>
+
+    @if (!Model.Any())
+    {
+        <div class="empty-state"><i class="bi bi-briefcase"></i>No experiences yet.</div>
+    }
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.all.min.js"></script>
+<script>
+    // Silme onayı
+    document.querySelectorAll('.js-delete').forEach(a => a.addEventListener('click', e => {
+        e.preventDefault();
+        Swal.fire({
+            title: 'Delete this experience?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it',
+            cancelButtonText: 'Cancel',
+            confirmButtonColor: '#c0342b',
+            cancelButtonColor: '#94a3b8',
+            reverseButtons: true
+        }).then(r => { if (r.isConfirmed) location.href = a.href; });
+    }));
+
+    // İşlem sonrası bildirim
+    const flash = @Json.Serialize(TempData["Success"]);
+    if (flash) {
+        Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: flash, showConfirmButton: false, timer: 2500 });
+    }
+</script>

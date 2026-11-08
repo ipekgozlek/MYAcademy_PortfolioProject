@@ -1,0 +1,263 @@
+﻿/* ===== Liste sayfaları ===== */
+.list-card {
+    background: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-subtle);
+    overflow: hidden;
+}
+
+.list-card-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.list-card-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--pastel-purple);
+    color: var(--primary-accent);
+    display: grid;
+    place-items: center;
+    font-size: 1.25rem;
+}
+
+.list-table {
+    width: 100%;
+    margin: 0;
+    border-collapse: collapse;
+}
+
+    .list-table th {
+        font-size: .72rem;
+        font-weight: 600;
+        letter-spacing: .07em;
+        text-transform: uppercase;
+        color: var(--text-secondary);
+        padding: 12px 24px;
+        background: #FAFBFE;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .list-table td {
+        padding: 16px 24px;
+        border-bottom: 1px solid #f1f2f7;
+        vertical-align: middle;
+        font-size: .88rem;
+    }
+
+    .list-table tbody tr:hover {
+        background: #FAFAFF;
+    }
+
+.cell-title {
+    font-weight: 600;
+}
+
+.cell-sub {
+    color: var(--text-secondary);
+    font-size: .8rem;
+}
+
+.date-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: .8rem;
+    color: var(--text-secondary);
+    background: #F4F5FA;
+    padding: 4px 10px;
+    border-radius: 8px;
+}
+
+.type-chip {
+    font-size: .75rem;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 8px;
+    background: var(--pastel-purple);
+    color: var(--primary-accent);
+}
+
+.status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: .75rem;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 999px;
+    text-decoration: none;
+}
+
+    .status-pill::before {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: currentColor;
+    }
+
+    .status-pill.on {
+        background: #ecfdf5;
+        color: #059669;
+    }
+
+    .status-pill.off {
+        background: #fdf0ef;
+        color: #c0342b;
+    }
+
+.icon-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    background: #fff;
+    display: inline-grid;
+    place-items: center;
+    color: var(--text-secondary);
+    text-decoration: none;
+}
+
+    .icon-btn:hover {
+        border-color: var(--primary-accent);
+        color: var(--primary-accent);
+    }
+
+    .icon-btn.danger {
+        color: #c0342b;
+        border-color: #f5c6c2;
+    }
+
+        .icon-btn.danger:hover {
+            background: #fdf0ef;
+        }
+
+.empty-state {
+    text-align: center;
+    color: var(--text-secondary);
+    padding: 56px 20px;
+}
+
+    .empty-state i {
+        font-size: 2.2rem;
+        display: block;
+        margin-bottom: 8px;
+    }
+
+/* ===== Form sayfaları ===== */
+.form-card {
+    background: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-subtle);
+}
+
+.form-card-header {
+    padding: 20px 26px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.form-card-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--pastel-purple);
+    color: var(--primary-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+}
+
+.form-card-body {
+    padding: 26px;
+}
+
+.form-card-footer {
+    padding: 16px 26px;
+    border-top: 1px solid var(--border-color);
+    background: #FAFBFE;
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.form-card .form-label {
+    font-size: .83rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.form-card .req {
+    color: #c0342b;
+}
+
+.form-card .form-control, .form-card .form-select {
+    border-radius: 10px;
+    border: 1px solid #DCE1ED;
+    padding: 9px 13px;
+    font-size: .88rem;
+}
+
+.status-box {
+    border: 1px solid #DCE1ED;
+    border-radius: 10px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.form-switch .form-check-input {
+    width: 2.6em;
+    height: 1.35em;
+    cursor: pointer;
+}
+
+.form-check-input:checked {
+    background-color: var(--primary-accent);
+    border-color: var(--primary-accent);
+}
+
+/* ===== Butonlar ===== */
+.btn-accent {
+    background: var(--primary-accent);
+    border: 1px solid var(--primary-accent);
+    color: #fff;
+    border-radius: 12px;
+    font-weight: 600;
+    padding: 9px 18px;
+    box-shadow: 0 4px 12px rgba(130,118,217,.25);
+}
+
+    .btn-accent:hover {
+        background: var(--primary-accent-hover);
+        color: #fff;
+    }
+
+.btn-soft {
+    background: #fff;
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    border-radius: 12px;
+    font-weight: 500;
+    padding: 9px 18px;
+}
+
+    .btn-soft:hover {
+        background: #F8F9FD;
+        color: var(--primary-accent);
+    }

@@ -1,0 +1,66 @@
+﻿@model MYAcademy_PortfolioProject.Entities.About
+@{
+    ViewData["Title"] = "About Me";
+    Layout = "~/Areas/Admin/Views/AdminLayout/_AdminLayout.cshtml";
+}
+
+<div class="form-card">
+    <form asp-area="Admin" asp-controller="About" asp-action="Index" method="post">
+        <input type="hidden" asp-for="AboutId" />
+
+        <div class="form-card-header">
+            <div class="form-card-icon"><i class="bi bi-person"></i></div>
+            <div>
+                <h5 class="mb-0 fw-bold">About Me</h5>
+                <small class="text-secondary">This information appears in the "Hakkımda" section of your website.</small>
+            </div>
+        </div>
+
+        <div class="form-card-body">
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <label asp-for="NameSurname" class="form-label">Full Name <span class="req">*</span></label>
+                    <input asp-for="NameSurname" class="form-control" placeholder="İpek Sertel" required />
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="JobTitle" class="form-label">Job Title <span class="req">*</span></label>
+                    <input asp-for="JobTitle" class="form-control" placeholder="Bilgisayar Mühendisi" required />
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Location" class="form-label">Location</label>
+                    <input asp-for="Location" class="form-control" placeholder="İzmir, Türkiye" />
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Expert" class="form-label">Expertise</label>
+                    <input asp-for="Expert" class="form-control" placeholder="Full Stack Web Development" />
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Email" class="form-label">Email</label>
+                    <input asp-for="Email" type="email" class="form-control" placeholder="e.g. ipek@gozlek@gmail.com" />
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="OpenToWork" class="form-label">Availability Note</label>
+                    <input asp-for="OpenToWork" class="form-control" placeholder="e.g. Yeni projelere ve iş birliklerine açık" />
+                    <small class="text-secondary">Leave empty to hide the green badge.</small>
+                </div>
+                <div class="col-12">
+                    <label asp-for="Description" class="form-label">Biography <span class="req">*</span></label>
+                    <textarea asp-for="Description" class="form-control" rows="7" required></textarea>
+                    <small class="text-secondary">Each new line becomes a separate paragraph on the website.</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-card-footer">
+            <button type="submit" class="btn btn-accent">
+                <i class="bi bi-check2-circle me-1"></i> Save Changes
+            </button>
+        </div>
+    </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.all.min.js"></script>
+<script>
+    const flash = @Json.Serialize(TempData["Success"]);
+    if (flash) Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: flash, showConfirmButton: false, timer: 2500 });
+</script>

@@ -1,0 +1,71 @@
+﻿@model MYAcademy_PortfolioProject.Entities.HeroSection
+@{
+    ViewData["Title"] = "Hero Section";
+    Layout = "~/Areas/Admin/Views/AdminLayout/_AdminLayout.cshtml";
+}
+
+<div class="row g-4">
+    <div class="col-lg-8">
+        <div class="form-card">
+            <form asp-area="Admin" asp-controller="HeroSection" asp-action="Index" method="post">
+                <input type="hidden" asp-for="HeroSectionId" />
+
+                <div class="form-card-header">
+                    <div class="form-card-icon"><i class="bi bi-house"></i></div>
+                    <div>
+                        <h5 class="mb-0 fw-bold">Hero Section</h5>
+                        <small class="text-secondary">The first thing visitors see on your homepage.</small>
+                    </div>
+                </div>
+
+                <div class="form-card-body">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <label asp-for="Title" class="form-label">Name <span class="req">*</span></label>
+                            <input asp-for="Title" class="form-control" placeholder="e.g. İpek" required />
+                            <small class="text-secondary">Shown as "Merhaba, Ben <b>İpek</b>."</small>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="SubTitle" class="form-label">Job Title <span class="req">*</span></label>
+                            <input asp-for="SubTitle" class="form-control" placeholder="e.g. Bilgisayar Mühendisi" required />
+                            <small class="text-secondary">Shown in the 👋 badge above your name.</small>
+                        </div>
+                        <div class="col-12">
+                            <label asp-for="Description" class="form-label">Intro Text <span class="req">*</span></label>
+                            <textarea asp-for="Description" class="form-control" rows="3" required></textarea>
+                        </div>
+                        <div class="col-12">
+                            <label asp-for="ImageUrl" class="form-label">Profile Image URL</label>
+                            <input asp-for="ImageUrl" id="imageUrl" class="form-control" placeholder="https://..." />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-card-footer">
+                    <button type="submit" class="btn btn-accent">
+                        <i class="bi bi-check2-circle me-1"></i> Save Changes
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="form-card p-3 text-center">
+            <div class="form-label text-start">Preview</div>
+            <img id="imagePreview" src="@Model.ImageUrl" alt="Profile preview"
+                 style="width:100%; aspect-ratio:4/5; object-fit:cover; border-radius:14px; background:#F4F5FA;" />
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.all.min.js"></script>
+<script>
+    // URL değiştikçe önizlemeyi güncelle
+    document.getElementById('imageUrl').addEventListener('input', e => {
+        document.getElementById('imagePreview').src = e.target.value;
+    });
+
+    const flash = @Json.Serialize(TempData["Success"]);
+    if (flash) Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: flash, showConfirmButton: false, timer: 2500 });
+</script>

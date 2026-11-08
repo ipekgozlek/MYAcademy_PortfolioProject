@@ -1,4 +1,7 @@
-﻿@{
+﻿    
+<link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />    
+@await RenderSectionAsync("Styles", required: false)
+@{
     Layout = null;
 
     // Breadcrumb için route bilgileri (örn: Admin / Deneyimler / DeneyimListesi)
@@ -338,7 +341,7 @@
         }
     </style>
 
-    @await RenderSectionAsync("Styles", required: false)
+
 </head>
 
 <body>

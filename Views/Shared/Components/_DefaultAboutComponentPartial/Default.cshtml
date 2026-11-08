@@ -1,0 +1,102 @@
+﻿@model MYAcademy_PortfolioProject.Entities.About
+
+@if (Model != null)
+{
+    var paragraphs = (Model.Description ?? "")
+        .Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
+    <section id="about">
+        <div class="container">
+            <div class="text-center mb-5 reveal-on-scroll">
+                <span class="section-eyebrow">BENİ TANIYIN</span>
+                <h2 class="section-title">Hakkımda</h2>
+                <p class="section-subtitle">Teknolojiye duyduğum merakı, insanlara değer katan yazılımlara dönüştürüyorum.</p>
+            </div>
+
+            <div class="row g-5 align-items-center">
+                <!-- Sol: Kişisel bilgi kartı -->
+                <div class="col-lg-5 reveal-on-scroll">
+                    <div class="about-visual-box">
+                        <div class="d-flex align-items-center gap-3 mb-4">
+                            <div class="float-icon-box bg-icon-purple" style="width: 52px; height: 52px; font-size: 1.4rem;">
+                                <i class="bi bi-person-badge"></i>
+                            </div>
+                            <div>
+                                <h4 class="mb-0 fs-5 fw-bold">@Model.NameSurname</h4>
+                                <span class="text-secondary small">@Model.JobTitle</span>
+                            </div>
+                        </div>
+
+                        <div class="info-list">
+                            <div class="info-list-item">
+                                <span class="info-label"><i class="bi bi-person me-2"></i>Ad Soyad</span>
+                                <span class="info-value">@Model.NameSurname</span>
+                            </div>
+                            <div class="info-list-item">
+                                <span class="info-label"><i class="bi bi-briefcase me-2"></i>Meslek</span>
+                                <span class="info-value">@Model.JobTitle</span>
+                            </div>
+                            <div class="info-list-item">
+                                <span class="info-label"><i class="bi bi-geo-alt me-2"></i>Konum</span>
+                                <span class="info-value">@Model.Location</span>
+                            </div>
+                            <div class="info-list-item">
+                                <span class="info-label"><i class="bi bi-layers me-2"></i>Uzmanlık</span>
+                                <span class="info-value">@Model.Expert</span>
+                            </div>
+                            <div class="info-list-item">
+                                <span class="info-label"><i class="bi bi-envelope me-2"></i>E-posta</span>
+                                <span class="info-value">@Model.Email</span>
+                            </div>
+                        </div>
+
+                        @if (!string.IsNullOrWhiteSpace(Model.OpenToWork))
+                        {
+                            <div class="mt-4 pt-2">
+                                <div class="p-3 rounded-4" style="background-color: var(--lavender-accent);">
+                                    <div class="d-flex align-items-center gap-2 text-dark small fw-semibold">
+                                        <i class="bi bi-check-circle-fill text-success"></i> @Model.OpenToWork
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <!-- Sağ: Biyografi + 3 kart -->
+                <div class="col-lg-7 reveal-on-scroll">
+                    <div class="pe-lg-3">
+                        @foreach (var p in paragraphs)
+                        {
+                            <p class="fs-6 text-secondary mb-3">@p</p>
+                        }
+
+                        <div class="row g-3 mt-2">
+                            <div class="col-md-4">
+                                <div class="highlight-card">
+                                    <div class="float-icon-box bg-icon-purple mb-3"><i class="bi bi-cpu"></i></div>
+                                    <h5 class="fs-6 fw-bold mb-1">Modern Teknolojiler</h5>
+                                    <p class="text-secondary small mb-0">Güncel .NET ve web ekosistemi ile ölçeklenebilir kod mimarisi.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="highlight-card">
+                                    <div class="float-icon-box bg-icon-mint mb-3"><i class="bi bi-puzzle"></i></div>
+                                    <h5 class="fs-6 fw-bold mb-1">Problem Çözme</h5>
+                                    <p class="text-secondary small mb-0">Algoritmik bakış açısıyla karmaşık gereksinimleri sadeleştirme.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="highlight-card">
+                                    <div class="float-icon-box bg-icon-blue mb-3"><i class="bi bi-arrow-repeat"></i></div>
+                                    <h5 class="fs-6 fw-bold mb-1">Sürekli Gelişim</h5>
+                                    <p class="text-secondary small mb-0">Teknolojiyi yakından takip ederek her gün yeni yetkinlikler edinme.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}

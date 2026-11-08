@@ -1,0 +1,60 @@
+﻿@model List<MYAcademy_PortfolioProject.Entities.Education>
+@{
+    var icons = new[] { "bi-mortarboard", "bi-book", "bi-journal-code" };
+    var colors = new[] { "bg-icon-purple", "bg-icon-mint", "bg-icon-blue" };
+}
+
+<section id="education" style="background-color: var(--bg-secondary);">
+    <div class="container">
+        <div class="text-center mb-5 reveal-on-scroll">
+            <span class="section-eyebrow">AKADEMİK YOLCULUĞUM</span>
+            <h2 class="section-title">Eğitim Hayatım</h2>
+            <p class="section-subtitle">Yazılım dünyasına uzanan yolculuğumun akademik temelleri.</p>
+        </div>
+
+        <div class="timeline-container">
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                var item = Model[i];
+                var left = i % 2 == 0;
+                var icon = icons[i % icons.Length];     // ikonlar sırayla dönüyor
+                var color = colors[i % colors.Length];  // renkler sırayla dönüyor
+
+                <div class="timeline-item row align-items-center g-4 reveal-on-scroll">
+
+                    @if (!left)
+                    {
+                        <div class="col-lg-6 timeline-left d-none d-lg-block">
+                            <div class="text-secondary fst-italic small">@item.Location</div>
+                        </div>
+                        <div class="timeline-marker"><i class="bi @icon"></i></div>
+                    }
+
+                    <div class="col-lg-6 @(left ? "timeline-left order-2 order-lg-1" : "timeline-right")">
+                        <div class="timeline-content-card">
+                            <span class="badge-year @color mb-2">
+                                <i class="bi bi-calendar3"></i> @item.Duration
+                            </span>
+                            <h4 class="fs-5 fw-bold mb-1">@item.Title</h4>
+                            <div class="text-primary fw-semibold small mb-2">@item.SubTitle</div>
+                            <p class="text-secondary small mb-0">@item.Description</p>
+                        </div>
+                    </div>
+
+                    @if (left)
+                    {
+                        <div class="timeline-marker"><i class="bi @icon"></i></div>
+                        <div class="col-lg-6 timeline-right order-1 order-lg-2 d-none d-lg-block">
+                            <div class="text-secondary fst-italic small">@item.Location</div>
+                        </div>
+                    }
+                </div>
+            }
+
+            @if (!Model.Any())
+            {
+                <p class="text-center text-secondary">Henüz eğitim bilgisi eklenmemiş.</p>
+            }
+        </div>
+    </div>
+</section>

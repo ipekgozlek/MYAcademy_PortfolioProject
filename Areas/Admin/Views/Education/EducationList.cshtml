@@ -1,0 +1,83 @@
+﻿@model List<MYAcademy_PortfolioProject.Entities.Education>
+@{
+    ViewData["Title"] = "Education";
+    Layout = "~/Areas/Admin/Views/AdminLayout/_AdminLayout.cshtml";
+}
+
+<div class="list-card">
+    <div class="list-card-header">
+        <div class="d-flex align-items-center gap-3">
+            <div class="list-card-icon"><i class="bi bi-mortarboard"></i></div>
+            <div>
+                <h5 class="mb-0 fw-bold">Education</h5>
+                <small class="text-secondary">Newest first. Passive records are hidden on the website.</small>
+            </div>
+        </div>
+        <a asp-area="Admin" asp-controller="Education" asp-action="CreateEducation" class="btn btn-accent">
+            <i class="bi bi-plus-lg me-1"></i> New Education
+        </a>
+    </div>
+
+    <table class="list-table">
+        <thead>
+            <tr>
+                <th>School / Department</th>
+                <th>Date</th>
+                <th>Location</th>
+                <th>Status</th>
+                <th class="text-end">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <div class="cell-title">@item.Title</div>
+                        <div class="cell-sub">@item.SubTitle</div>
+                    </td>
+                    <td><span class="date-chip"><i class="bi bi-calendar3"></i> @item.Duration</span></td>
+                    <td class="cell-sub">@item.Location</td>
+                    <td>
+                        <a asp-area="Admin" asp-controller="Education" asp-action="ToggleStatus" asp-route-id="@item.EducationId"
+                           class="status-pill @(item.IsActive ? "on" : "off")" title="Click to toggle">
+                            @(item.IsActive ? "Active" : "Passive")
+                        </a>
+                    </td>
+                    <td class="text-end">
+                        <a asp-area="Admin" asp-controller="Education" asp-action="UpdateEducation" asp-route-id="@item.EducationId"
+                           class="icon-btn" title="Edit"><i class="bi bi-pencil"></i></a>
+                        <a asp-area="Admin" asp-controller="Education" asp-action="DeleteEducation" asp-route-id="@item.EducationId"
+                           class="icon-btn danger js-delete" title="Delete"><i class="bi bi-trash3"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @if (!Model.Any())
+    {
+        <div class="empty-state"><i class="bi bi-mortarboard"></i>No education records yet.</div>
+    }
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.all.min.js"></script>
+<script>
+    document.querySelectorAll('.js-delete').forEach(a => a.addEventListener('click', e => {
+        e.preventDefault();
+        Swal.fire({
+            title: 'Delete this record?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it',
+            cancelButtonText: 'Cancel',
+            confirmButtonColor: '#c0342b',
+            cancelButtonColor: '#94a3b8',
+            reverseButtons: true
+        }).then(r => { if (r.isConfirmed) location.href = a.href; });
+    }));
+
+    const flash = @Json.Serialize(TempData["Success"]);
+    if (flash) Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: flash, showConfirmButton: false, timer: 2500 });
+</script>
