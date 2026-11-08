@@ -667,46 +667,48 @@
                 <!-- Right: Contact Form -->
                 <div class="col-lg-7 reveal-on-scroll">
                     <div class="contact-form-card">
-                        <form id="contactForm" novalidate>
-                            <!-- Info note for ASP.NET integration -->
-                            <div class="alert alert-info border-0 rounded-3 small py-2 px-3 mb-4 d-flex align-items-center gap-2" role="alert">
-                                <i class="bi bi-info-circle-fill fs-5"></i>
-                                <div>
-                                    <strong>Demo Modu:</strong> Bu form tasarımı ASP.NET Core MVC Controller entegrasyonu için hazırdır. Gönderim simüle edilir.
-                                </div>
-                            </div>
+                        <form id="contactForm" asp-controller="Default" asp-action="SendMessage" method="post" novalidate>
+                            @Html.AntiForgeryToken()
 
                             <div id="formSuccessMessage" class="alert alert-success border-0 rounded-3 small py-2 px-3 mb-4 d-none" role="alert">
                                 <i class="bi bi-check-circle-fill me-2"></i> Mesajınız başarıyla iletildi! Teşekkür ederiz.
+                            </div>
+                            <div id="formErrorMessage" class="alert alert-danger border-0 rounded-3 small py-2 px-3 mb-4 d-none" role="alert">
+                                <i class="bi bi-exclamation-triangle-fill me-2"></i> Mesaj gönderilemedi, lütfen tekrar deneyin.
                             </div>
 
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <label for="contactFullName" class="form-label">Adınız Soyadınız *</label>
-                                    <input type="text" class="form-control" id="contactFullName" name="FullName" placeholder="Örn: Ahmet Yılmaz" required>
-                                    <div class="invalid-feedback">Lütfen adınızı ve soyadınızı giriniz.</div>
+                                    <input type="text" class="form-control" id="contactFullName" name="NameSurname"
+                                           placeholder="Örn: Seher Yılmaz" required minlength="2" maxlength="50">
+                                    <div class="invalid-feedback" data-for="NameSurname">Ad soyad 2-50 karakter olmalıdır.</div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <label for="contactEmail" class="form-label">E-posta Adresiniz *</label>
-                                    <input type="email" class="form-control" id="contactEmail" name="Email" placeholder="Örn: ahmet@example.com" required>
-                                    <div class="invalid-feedback">Geçerli bir e-posta adresi giriniz.</div>
+                                    <input type="email" class="form-control" id="contactEmail" name="Email"
+                                           placeholder="Örn: seher@example.com" required maxlength="100">
+                                    <div class="invalid-feedback" data-for="Email">Geçerli bir e-posta adresi giriniz.</div>
                                 </div>
 
                                 <div class="col-12">
                                     <label for="contactSubject" class="form-label">Konu *</label>
-                                    <input type="text" class="form-control" id="contactSubject" name="Subject" placeholder="Örn: Proje İş Birliği veya Danışmanlık" required>
-                                    <div class="invalid-feedback">Lütfen mesaj konusunu belirtiniz.</div>
+                                    <input type="text" class="form-control" id="contactSubject" name="Subject"
+                                           placeholder="Örn: Proje İş Birliği veya Danışmanlık" required minlength="3" maxlength="100">
+                                    <div class="invalid-feedback" data-for="Subject">Konu 3-100 karakter olmalıdır.</div>
                                 </div>
 
                                 <div class="col-12">
                                     <label for="contactMessage" class="form-label">Mesajınız *</label>
-                                    <textarea class="form-control" id="contactMessage" name="Message" rows="5" placeholder="Projeniz veya paylaşmak istedikleriniz hakkında detay verebilirsiniz..." required></textarea>
-                                    <div class="invalid-feedback">Lütfen mesajınızı yazınız.</div>
+                                    <textarea class="form-control" id="contactMessage" name="MessageDetail" rows="5"
+                                              placeholder="Projeniz veya paylaşmak istedikleriniz hakkında detay verebilirsiniz..."
+                                              required minlength="10" maxlength="2000"></textarea>
+                                    <div class="invalid-feedback" data-for="MessageDetail">Mesaj en az 10 karakter olmalıdır.</div>
                                 </div>
 
                                 <div class="col-12 mt-4">
-                                    <button type="submit" class="btn-custom-primary w-100 justify-content-center py-3">
+                                    <button type="submit" id="contactSubmitBtn" class="btn-custom-primary w-100 justify-content-center py-3">
                                         <i class="bi bi-send-fill"></i> Mesaj Gönder
                                     </button>
                                 </div>
@@ -903,26 +905,55 @@
                 revealElements.forEach(el => el.classList.add('revealed'));
               }
 
-              // 5. CONTACT FORM VALIDATION & DEMO SUBMISSION (HTML5 + Vanilla JS)
+                            // 5. CONTACT FORM: tarayıcı + sunucu doğrulaması, veritabanına kayıt
               const contactForm = document.getElementById('contactForm');
               const formSuccessMessage = document.getElementById('formSuccessMessage');
+              const formErrorMessage = document.getElementById('formErrorMessage');
+              const submitBtn = document.getElementById('contactSubmitBtn');
 
               if (contactForm) {
                 contactForm.addEventListener('submit', function (event) {
                   event.preventDefault();
                   event.stopPropagation();
 
+                  // Önceki sunucu hatalarını temizle
+                  contactForm.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+                  formSuccessMessage.classList.add('d-none');
+                  formErrorMessage.classList.add('d-none');
+
+                  // 1) Tarayıcı doğrulaması
                   if (!contactForm.checkValidity()) {
                     contactForm.classList.add('was-validated');
-                  } else {
-                    contactForm.classList.remove('was-validated');
-                    formSuccessMessage.classList.remove('d-none');
-                    contactForm.reset();
-
-                    setTimeout(() => {
-                      formSuccessMessage.classList.add('d-none');
-                    }, 6000);
+                    return;
                   }
+                  contactForm.classList.remove('was-validated');
+
+                  // 2) Sunucuya gönder
+                  submitBtn.disabled = true;
+                  submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Gönderiliyor...';
+
+                  fetch(contactForm.action, { method: 'POST', body: new FormData(contactForm) })
+                    .then(res => res.json())
+                    .then(data => {
+                      if (data.success) {
+                        formSuccessMessage.classList.remove('d-none');
+                        contactForm.reset();
+                        setTimeout(() => formSuccessMessage.classList.add('d-none'), 6000);
+                      } else {
+                        // Sunucunun döndürdüğü hataları ilgili alanların altına yaz
+                        Object.entries(data.errors || {}).forEach(([field, msg]) => {
+                          const input = contactForm.querySelector(`[name="${field}"]`);
+                          const feedback = contactForm.querySelector(`.invalid-feedback[data-for="${field}"]`);
+                          if (input) input.classList.add('is-invalid');
+                          if (feedback) feedback.textContent = msg;
+                        });
+                      }
+                    })
+                    .catch(() => formErrorMessage.classList.remove('d-none'))
+                    .finally(() => {
+                      submitBtn.disabled = false;
+                      submitBtn.innerHTML = '<i class="bi bi-send-fill"></i> Mesaj Gönder';
+                    });
                 });
               }
 
