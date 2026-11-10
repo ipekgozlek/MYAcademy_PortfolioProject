@@ -1,0 +1,101 @@
+﻿@model MYAcademy_PortfolioProject.Entities.Project
+@{
+    var isNew = Model.ProjectId == 0;
+    ViewData["Title"] = isNew ? "New Project" : "Edit Project";
+    Layout = "~/Areas/Admin/Views/AdminLayout/_AdminLayout.cshtml";
+}
+
+<div class="row g-4">
+    <div class="col-lg-8">
+        <div class="form-card">
+            <form asp-area="Admin" asp-controller="Project" asp-action="Save" method="post">
+                <input type="hidden" asp-for="ProjectId" />
+
+                <div class="form-card-header">
+                    <div class="form-card-icon"><i class="bi bi-grid"></i></div>
+                    <div>
+                        <h5 class="mb-0 fw-bold">@ViewData["Title"]</h5>
+                        <small class="text-secondary">Shown as a card in the "Projelerim" section.</small>
+                    </div>
+                </div>
+
+                <div class="form-card-body">
+                    <div class="row g-4">
+                        <div class="col-md-7">
+                            <label asp-for="Title" class="form-label">Title <span class="req">*</span></label>
+                            <input asp-for="Title" class="form-control" placeholder="e.g. Portfolio Admin Panel" />
+                            <span asp-validation-for="Title" class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-5">
+                            <label asp-for="CategoryId" class="form-label">Category <span class="req">*</span></label>
+                            <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-select">
+                                <option value="0">Select...</option>
+                            </select>
+                            <span asp-validation-for="CategoryId" class="text-danger small"></span>
+                        </div>
+                        <div class="col-12">
+                            <label asp-for="Description" class="form-label">Description <span class="req">*</span></label>
+                            <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                            <span asp-validation-for="Description" class="text-danger small"></span>
+                        </div>
+                        <div class="col-12">
+                            <label asp-for="Technologies" class="form-label">Technologies</label>
+                            <input asp-for="Technologies" id="techInput" class="form-control" placeholder="ASP.NET Core, EF Core, SQL Server, Bootstrap" />
+                            <small class="text-secondary">Separate with commas. Each one becomes a tag.</small>
+                            <div id="techPreview" class="mt-2 d-flex flex-wrap gap-1"></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="GithubUrl" class="form-label"><i class="bi bi-github me-1"></i> GitHub URL</label>
+                            <input asp-for="GithubUrl" class="form-control" placeholder="https://github.com/..." />
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="LiveUrl" class="form-label"><i class="bi bi-box-arrow-up-right me-1"></i> Live Demo URL</label>
+                            <input asp-for="LiveUrl" class="form-control" placeholder="Leave empty to hide the button" />
+                        </div>
+                        <div class="col-12">
+                            <label asp-for="CoverImageUrl" class="form-label">Cover Image URL</label>
+                            <input asp-for="CoverImageUrl" id="imageUrl" class="form-control" placeholder="/images/project1.jpg" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-card-footer">
+                    <a asp-area="Admin" asp-controller="Project" asp-action="ProjectList" class="btn btn-soft">
+                        <i class="bi bi-arrow-left me-1"></i> Cancel
+                    </a>
+                    <button type="submit" class="btn btn-accent"><i class="bi bi-check2-circle me-1"></i> Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="form-card p-3">
+            <div class="form-label">Cover Preview</div>
+            <img id="imagePreview" src="@Model.CoverImageUrl" alt=""
+                 style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:12px; background:#F4F5FA;" />
+        </div>
+    </div>
+</div>
+
+<script>
+    // Görsel önizleme
+    document.getElementById('imageUrl').addEventListener('input', e => {
+        document.getElementById('imagePreview').src = e.target.value;
+    });
+
+    // Teknoloji etiketi önizleme
+    const techInput = document.getElementById('techInput');
+    const techPreview = document.getElementById('techPreview');
+    function renderTags() {
+        techPreview.innerHTML = '';
+        techInput.value.split(',').map(t => t.trim()).filter(t => t).forEach(t => {
+            const span = document.createElement('span');
+            span.className = 'type-chip';
+            span.textContent = t;
+            techPreview.appendChild(span);
+        });
+    }
+    techInput.addEventListener('input', renderTags);
+    renderTags();
+</script>

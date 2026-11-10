@@ -1,0 +1,85 @@
+﻿@model List<MYAcademy_PortfolioProject.Entities.Project>
+@{
+    ViewData["Title"] = "Projects";
+    Layout = "~/Areas/Admin/Views/AdminLayout/_AdminLayout.cshtml";
+}
+
+<div class="list-card">
+    <div class="list-card-header">
+        <div class="d-flex align-items-center gap-3">
+            <div class="list-card-icon"><i class="bi bi-grid"></i></div>
+            <div>
+                <h5 class="mb-0 fw-bold">Projects</h5>
+                <small class="text-secondary">Shown as cards on the website, filterable by category.</small>
+            </div>
+        </div>
+        <a asp-area="Admin" asp-controller="Project" asp-action="CreateProject" class="btn btn-accent">
+            <i class="bi bi-plus-lg me-1"></i> New Project
+        </a>
+    </div>
+
+    <table class="list-table">
+        <thead>
+            <tr>
+                <th>Project</th>
+                <th>Category</th>
+                <th>Links</th>
+                <th class="text-end">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <div class="d-flex align-items-center gap-3">
+                            <img src="@item.CoverImageUrl" alt=""
+                                 style="width:72px; height:44px; object-fit:cover; border-radius:8px; background:#F4F5FA;" />
+                            <div>
+                                <div class="cell-title">@item.Title</div>
+                                <div class="cell-sub">@item.Technologies</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td><span class="type-chip">@item.Category?.CategoryName</span></td>
+                    <td>
+                        @if (!string.IsNullOrWhiteSpace(item.GithubUrl))
+                        {
+                            <a href="@item.GithubUrl" target="_blank" class="icon-btn" title="GitHub"><i class="bi bi-github"></i></a>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(item.LiveUrl))
+                        {
+                            <a href="@item.LiveUrl" target="_blank" class="icon-btn" title="Live Demo"><i class="bi bi-box-arrow-up-right"></i></a>
+                        }
+                    </td>
+                    <td class="text-end">
+                        <a asp-area="Admin" asp-controller="Project" asp-action="UpdateProject" asp-route-id="@item.ProjectId"
+                           class="icon-btn" title="Edit"><i class="bi bi-pencil"></i></a>
+                        <a asp-area="Admin" asp-controller="Project" asp-action="DeleteProject" asp-route-id="@item.ProjectId"
+                           class="icon-btn danger js-delete" title="Delete"><i class="bi bi-trash3"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @if (!Model.Any())
+    {
+        <div class="empty-state"><i class="bi bi-grid"></i>No projects yet.</div>
+    }
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.all.min.js"></script>
+<script>
+    document.querySelectorAll('.js-delete').forEach(a => a.addEventListener('click', e => {
+        e.preventDefault();
+        Swal.fire({
+            title: 'Delete this project?', text: "You won't be able to revert this!", icon: 'warning',
+            showCancelButton: true, confirmButtonText: 'Yes, delete it', cancelButtonText: 'Cancel',
+            confirmButtonColor: '#c0342b', cancelButtonColor: '#94a3b8', reverseButtons: true
+        }).then(r => { if (r.isConfirmed) location.href = a.href; });
+    }));
+
+    const flash = @Json.Serialize(TempData["Success"]);
+    if (flash) Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: flash, showConfirmButton: false, timer: 2500 });
+</script>

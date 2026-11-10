@@ -261,3 +261,22 @@
         background: #F8F9FD;
         color: var(--primary-accent);
     }
+/* ===== Seviye noktaları ===== */
+.level-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.lvl-high {
+    background: #10b981;
+}
+
+.lvl-mid {
+    background: #6366f1;
+}
+
+.lvl-low {
+    background: #cbd5e1;
+}

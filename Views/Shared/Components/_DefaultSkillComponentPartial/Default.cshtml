@@ -1,0 +1,67 @@
+﻿@model List<MYAcademy_PortfolioProject.Entities.SkillCategory>
+@{
+    var colors = new[] { "bg-icon-purple", "bg-icon-blue", "bg-icon-mint", "bg-icon-peach" };
+
+    int Order(string level) => level == "İleri" ? 0 : level == "Orta" ? 1 : 2;
+    string Dot(string level) => level == "İleri" ? "lvl-high" : level == "Orta" ? "lvl-mid" : "lvl-low";
+
+
+    var count = Model.Count;
+    var rest = count % 3;
+    string Col(int i) => rest == 2 && i >= count - 2 ? "col-lg-6 col-md-6"
+                       : rest == 1 && i == count - 1 ? "col-12"
+                       : "col-lg-4 col-md-6";
+}
+
+<style>
+    .level-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 4px; }
+    .lvl-high { background: #10b981; }
+    .lvl-mid  { background: #6366f1; }
+    .lvl-low  { background: #cbd5e1; }
+</style>
+
+<section id="skills" style="background-color: var(--bg-secondary);">
+    <div class="container">
+        <div class="text-center mb-5 reveal-on-scroll">
+            <span class="section-eyebrow">TEKNİK YETKİNLİKLER</span>
+            <h2 class="section-title">Yeteneklerim</h2>
+            <p class="section-subtitle">Fikirleri çalışan yazılımlara dönüştürürken kullandığım teknolojiler.</p>
+        </div>
+
+        <div class="row g-4">
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                var category = Model[i];
+
+                <div class="@Col(i) reveal-on-scroll">
+                    <div class="skill-group-card">
+                        <div class="d-flex align-items-center gap-3 mb-3">
+                            <div class="float-icon-box @colors[i % colors.Length]">
+                                <i class="bi @(category.Icon ?? "bi-code-slash")"></i>
+                            </div>
+                            <h4 class="fs-5 fw-bold mb-0">@category.Title</h4>
+                        </div>
+                        <p class="text-secondary small mb-3">@category.Description</p>
+                        <div class="d-flex flex-wrap">
+                            @foreach (var skill in category.Skills.OrderBy(s => Order(s.Level)))
+                            {
+                                <span class="skill-chip" title="@skill.Level">
+                                    <span class="level-dot @Dot(skill.Level)"></span> @skill.Title
+                                </span>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        @if (Model.Any())
+        {
+            <div class="text-center text-secondary small mt-4">
+                <span class="level-dot lvl-high"></span> İleri &nbsp;&nbsp;
+                <span class="level-dot lvl-mid"></span> Orta &nbsp;&nbsp;
+                <span class="level-dot lvl-low"></span> Başlangıç
+            </div>
+        }
+    </div>
+</section>

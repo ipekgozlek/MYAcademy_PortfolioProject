@@ -1,0 +1,30 @@
+﻿@model MYAcademy_PortfolioProject.Entities.Contact
+@{
+
+    string Url(string link) =>
+        string.IsNullOrWhiteSpace(link) ? null
+        : link.StartsWith("http") ? link
+        : "https://" + link;
+}
+
+@if (Model != null)
+{
+    @if (!string.IsNullOrWhiteSpace(Model.Github))
+    {
+        <a href="@Url(Model.Github)" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="GitHub">
+            <i class="bi bi-github"></i>
+        </a>
+    }
+    @if (!string.IsNullOrWhiteSpace(Model.Linkedin))
+    {
+        <a href="@Url(Model.Linkedin)" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="LinkedIn">
+            <i class="bi bi-linkedin"></i>
+        </a>
+    }
+    @if (!string.IsNullOrWhiteSpace(Model.Email))
+    {
+        <a href="mailto:@Model.Email" class="social-btn" aria-label="E-posta">
+            <i class="bi bi-envelope"></i>
+        </a>
+    }
+}

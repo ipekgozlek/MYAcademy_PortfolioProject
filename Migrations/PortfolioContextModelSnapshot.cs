@@ -271,7 +271,6 @@ namespace MYAcademy_PortfolioProject.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("CoverImageUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
@@ -279,7 +278,12 @@ namespace MYAcademy_PortfolioProject.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("GithubUrl")
-                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LiveUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Technologies")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
@@ -293,6 +297,60 @@ namespace MYAcademy_PortfolioProject.Migrations
                     b.ToTable("Projects");
                 });
 
+            modelBuilder.Entity("MYAcademy_PortfolioProject.Entities.Skill", b =>
+                {
+                    b.Property<int>("SkillId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SkillId"));
+
+                    b.Property<string>("Level")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<int>("SkillCategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("SkillId");
+
+                    b.HasIndex("SkillCategoryId");
+
+                    b.ToTable("Skills");
+                });
+
+            modelBuilder.Entity("MYAcademy_PortfolioProject.Entities.SkillCategory", b =>
+                {
+                    b.Property<int>("SkillCategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SkillCategoryId"));
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Icon")
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
+
+                    b.HasKey("SkillCategoryId");
+
+                    b.ToTable("SkillCategories");
+                });
+
             modelBuilder.Entity("MYAcademy_PortfolioProject.Entities.Project", b =>
                 {
                     b.HasOne("MYAcademy_PortfolioProject.Entities.Category", "Category")
@@ -304,9 +362,25 @@ namespace MYAcademy_PortfolioProject.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("MYAcademy_PortfolioProject.Entities.Skill", b =>
+                {
+                    b.HasOne("MYAcademy_PortfolioProject.Entities.SkillCategory", "SkillCategory")
+                        .WithMany("Skills")
+                        .HasForeignKey("SkillCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("SkillCategory");
+                });
+
             modelBuilder.Entity("MYAcademy_PortfolioProject.Entities.Category", b =>
                 {
                     b.Navigation("Projects");
+                });
+
+            modelBuilder.Entity("MYAcademy_PortfolioProject.Entities.SkillCategory", b =>
+                {
+                    b.Navigation("Skills");
                 });
 #pragma warning restore 612, 618
         }

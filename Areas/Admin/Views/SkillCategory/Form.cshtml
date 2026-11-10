@@ -1,0 +1,60 @@
+﻿@model MYAcademy_PortfolioProject.Entities.SkillCategory
+@{
+    var isNew = Model.SkillCategoryId == 0;
+    ViewData["Title"] = isNew ? "New Category" : "Edit Category";
+    Layout = "~/Areas/Admin/Views/AdminLayout/_AdminLayout.cshtml";
+
+    var icons = new[] { "bi-hdd-network", "bi-browser-chrome", "bi-database", "bi-tools", "bi-diagram-3",
+                        "bi-code-slash", "bi-cpu", "bi-cloud", "bi-phone", "bi-shield-lock", "bi-palette", "bi-bar-chart" };
+}
+
+<div class="form-card">
+    <form asp-area="Admin" asp-controller="SkillCategory" asp-action="Save" method="post">
+        <input type="hidden" asp-for="SkillCategoryId" />
+
+        <div class="form-card-header">
+            <div class="form-card-icon"><i class="bi @(Model.Icon ?? "bi-code-slash")" id="iconPreview"></i></div>
+            <div>
+                <h5 class="mb-0 fw-bold">@ViewData["Title"]</h5>
+                <small class="text-secondary">A card that groups related skills on the website.</small>
+            </div>
+        </div>
+
+        <div class="form-card-body">
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <label asp-for="Title" class="form-label">Category Name <span class="req">*</span></label>
+                    <input asp-for="Title" class="form-control" placeholder="e.g. Backend Development" />
+                    <span asp-validation-for="Title" class="text-danger small"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Icon" class="form-label">Icon</label>
+                    <select asp-for="Icon" class="form-select" id="iconSelect">
+                        @foreach (var icon in icons)
+                        {
+                            <option value="@icon">@icon.Replace("bi-", "")</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-12">
+                    <label asp-for="Description" class="form-label">Description</label>
+                    <textarea asp-for="Description" class="form-control" rows="2"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-card-footer">
+            <a asp-area="Admin" asp-controller="SkillCategory" asp-action="SkillCategoryList" class="btn btn-soft">
+                <i class="bi bi-arrow-left me-1"></i> Cancel
+            </a>
+            <button type="submit" class="btn btn-accent"><i class="bi bi-check2-circle me-1"></i> Save</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    // İkon seçildikçe başlıktaki ikonu güncelle
+    document.getElementById('iconSelect').addEventListener('change', e => {
+        document.getElementById('iconPreview').className = 'bi ' + e.target.value;
+    });
+</script>

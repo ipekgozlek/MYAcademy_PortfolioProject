@@ -1,6 +1,12 @@
 ﻿@model List<MYAcademy_PortfolioProject.Entities.Project>
+@{
+    // Sadece projesi olan kategoriler filtre butonu olsun
+    var categories = Model.Where(x => x.Category != null)
+                          .Select(x => x.Category)
+                          .DistinctBy(c => c.CategoryId)
+                          .ToList();
+}
 
-<!-- Portfolio Projects Section -->
 <section id="projects">
     <div class="container">
         <div class="text-center mb-4 reveal-on-scroll">
@@ -9,70 +15,67 @@
             <p class="section-subtitle">Öğrendiklerimi gerçek ürünlere dönüştürdüğüm çalışmalar.</p>
         </div>
 
-        <!-- Category Filter Buttons -->
+        <!-- Filtre butonları: veritabanındaki kategorilerden -->
         <div class="d-flex justify-content-center flex-wrap gap-2 mb-5 reveal-on-scroll" id="projectFilterGroup">
             <button class="filter-btn active" data-filter="all">Tümü</button>
-            <button class="filter-btn" data-filter="web-app">Web Uygulamaları</button>
-            <button class="filter-btn" data-filter="dashboard">Dashboard</button>
-            <button class="filter-btn" data-filter="api-projects">API Projeleri</button>
+            @foreach (var c in categories)
+            {
+                <button class="filter-btn" data-filter="cat-@c.CategoryId">@c.CategoryName</button>
+            }
         </div>
 
-        <!-- Project Cards Grid -->
         <div class="row g-4" id="projectGrid">
             @foreach (var item in Model)
             {
-                <div class="col-lg-4 col-md-6 project-item" data-category="web-app">
+                var techs = (item.Technologies ?? "")
+                            .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
+                <div class="col-lg-4 col-md-6 project-item" data-category="cat-@item.CategoryId">
                     <div class="project-card reveal-on-scroll">
 
-                        <!-- Project Image -->
-                        <div class="project-thumb"
-                             style="width:100%; aspect-ratio:16/9; overflow:hidden;">
-
-                            <img src="@item.CoverImageUrl"
-                                 alt="@item.Title"
-                                 style="width:100%;
-                            height:100%;
-                            object-fit:cover;
-                            display:block;" />
+                        <div class="project-thumb" style="width:100%; aspect-ratio:16/9; overflow:hidden;">
+                            <img src="@item.CoverImageUrl" alt="@item.Title" loading="lazy"
+                                 style="width:100%; height:100%; object-fit:cover; display:block;" />
                         </div>
 
-                        <!-- Project Content -->
                         <div class="project-body">
-                            <span class="project-category-badge">@item.Category.CategoryName</span>
-
+                            <span class="project-category-badge">@item.Category?.CategoryName</span>
                             <h3 class="project-title">@item.Title</h3>
-
                             <p class="project-desc">@item.Description</p>
 
-                            <!-- Technologies -->
-                            <div class="mb-3">
-                                <span class="tech-tag">ASP.NET Core</span>
-                                <span class="tech-tag">EF Core</span>
-                                <span class="tech-tag">SQL Server</span>
-                                <span class="tech-tag">Bootstrap</span>
-                            </div>
+                            @if (techs.Any())
+                            {
+                                <div class="mb-3">
+                                    @foreach (var t in techs)
+                                    {
+                                        <span class="tech-tag">@t</span>
+                                    }
+                                </div>
+                            }
 
-                            <!-- Project Links -->
                             <div class="project-footer">
-                                <a href="@item.GithubUrl"
-                                   target="_blank"
-                                   rel="noopener noreferrer"
-                                   class="project-link-btn">
-                                    <i class="bi bi-github"></i> GitHub
-                                </a>
-
-                                <a href="#projects"
-                                   class="project-link-btn text-primary">
-                                    <i class="bi bi-box-arrow-up-right"></i> Canlı Demo
-                                </a>
+                                @if (!string.IsNullOrWhiteSpace(item.GithubUrl))
+                                {
+                                    <a href="@item.GithubUrl" target="_blank" rel="noopener noreferrer" class="project-link-btn">
+                                        <i class="bi bi-github"></i> GitHub
+                                    </a>
+                                }
+                                @if (!string.IsNullOrWhiteSpace(item.LiveUrl))
+                                {
+                                    <a href="@item.LiveUrl" target="_blank" rel="noopener noreferrer" class="project-link-btn text-primary">
+                                        <i class="bi bi-box-arrow-up-right"></i> Canlı Demo
+                                    </a>
+                                }
                             </div>
                         </div>
-
                     </div>
                 </div>
+            }
+
+            @if (!Model.Any())
+            {
+                <p class="text-center text-secondary">Henüz proje eklenmemiş.</p>
             }
         </div>
     </div>
 </section>
-
-

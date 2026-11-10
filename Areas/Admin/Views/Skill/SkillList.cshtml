@@ -1,0 +1,78 @@
+﻿@model List<MYAcademy_PortfolioProject.Entities.Skill>
+@{
+    ViewData["Title"] = "Skills";
+    Layout = "~/Areas/Admin/Views/AdminLayout/_AdminLayout.cshtml";
+
+    string Dot(string level) => level == "İleri" ? "lvl-high" : level == "Orta" ? "lvl-mid" : "lvl-low";
+}
+
+<div class="list-card">
+    <div class="list-card-header">
+        <div class="d-flex align-items-center gap-3">
+            <div class="list-card-icon"><i class="bi bi-code-slash"></i></div>
+            <div>
+                <h5 class="mb-0 fw-bold">Skills</h5>
+                <small class="text-secondary">
+                    <span class="level-dot lvl-high"></span> İleri &nbsp;
+                    <span class="level-dot lvl-mid"></span> Orta &nbsp;
+                    <span class="level-dot lvl-low"></span> Başlangıç
+                </small>
+            </div>
+        </div>
+        <div class="d-flex gap-2">
+            <a asp-area="Admin" asp-controller="SkillCategory" asp-action="SkillCategoryList" class="btn btn-soft">
+                <i class="bi bi-grid-3x3-gap me-1"></i> Categories
+            </a>
+            <a asp-area="Admin" asp-controller="Skill" asp-action="CreateSkill" class="btn btn-accent">
+                <i class="bi bi-plus-lg me-1"></i> New Skill
+            </a>
+        </div>
+    </div>
+
+    <table class="list-table">
+        <thead>
+            <tr>
+                <th>Skill</th>
+                <th>Category</th>
+                <th>Level</th>
+                <th class="text-end">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="cell-title">@item.Title</td>
+                    <td><span class="type-chip">@item.SkillCategory?.Title</span></td>
+                    <td><span class="d-inline-flex align-items-center gap-2"><span class="level-dot @Dot(item.Level)"></span> @item.Level</span></td>
+                    <td class="text-end">
+                        <a asp-area="Admin" asp-controller="Skill" asp-action="UpdateSkill" asp-route-id="@item.SkillId"
+                           class="icon-btn" title="Edit"><i class="bi bi-pencil"></i></a>
+                        <a asp-area="Admin" asp-controller="Skill" asp-action="DeleteSkill" asp-route-id="@item.SkillId"
+                           class="icon-btn danger js-delete" title="Delete"><i class="bi bi-trash3"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @if (!Model.Any())
+    {
+        <div class="empty-state"><i class="bi bi-code-slash"></i>No skills yet.</div>
+    }
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.all.min.js"></script>
+<script>
+    document.querySelectorAll('.js-delete').forEach(a => a.addEventListener('click', e => {
+        e.preventDefault();
+        Swal.fire({
+            title: 'Delete this skill?', text: "You won't be able to revert this!", icon: 'warning',
+            showCancelButton: true, confirmButtonText: 'Yes, delete it', cancelButtonText: 'Cancel',
+            confirmButtonColor: '#c0342b', cancelButtonColor: '#94a3b8', reverseButtons: true
+        }).then(r => { if (r.isConfirmed) location.href = a.href; });
+    }));
+
+    const flash = @Json.Serialize(TempData["Success"]);
+    if (flash) Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: flash, showConfirmButton: false, timer: 2500 });
+</script>

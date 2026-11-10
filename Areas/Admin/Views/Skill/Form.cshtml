@@ -1,0 +1,51 @@
+﻿@model MYAcademy_PortfolioProject.Entities.Skill
+@{
+    var isNew = Model.SkillId == 0;
+    ViewData["Title"] = isNew ? "New Skill" : "Edit Skill";
+    Layout = "~/Areas/Admin/Views/AdminLayout/_AdminLayout.cshtml";
+    var levels = new[] { "İleri", "Orta", "Başlangıç" };
+}
+
+<div class="form-card">
+    <form asp-area="Admin" asp-controller="Skill" asp-action="Save" method="post">
+        <input type="hidden" asp-for="SkillId" />
+
+        <div class="form-card-header">
+            <div class="form-card-icon"><i class="bi bi-code-slash"></i></div>
+            <div>
+                <h5 class="mb-0 fw-bold">@ViewData["Title"]</h5>
+                <small class="text-secondary">Shown as a tag inside its category card.</small>
+            </div>
+        </div>
+
+        <div class="form-card-body">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <label asp-for="Title" class="form-label">Skill Name <span class="req">*</span></label>
+                    <input asp-for="Title" class="form-control" placeholder="e.g. C#" />
+                    <span asp-validation-for="Title" class="text-danger small"></span>
+                </div>
+                <div class="col-md-4">
+                    <label asp-for="SkillCategoryId" class="form-label">Category <span class="req">*</span></label>
+                    <select asp-for="SkillCategoryId" asp-items="ViewBag.Categories" class="form-select"></select>
+                </div>
+                <div class="col-md-4">
+                    <label asp-for="Level" class="form-label">Level <span class="req">*</span></label>
+                    <select asp-for="Level" class="form-select">
+                        @foreach (var l in levels)
+                        {
+                            <option value="@l">@l</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-card-footer">
+            <a asp-area="Admin" asp-controller="Skill" asp-action="SkillList" class="btn btn-soft">
+                <i class="bi bi-arrow-left me-1"></i> Cancel
+            </a>
+            <button type="submit" class="btn btn-accent"><i class="bi bi-check2-circle me-1"></i> Save</button>
+        </div>
+    </form>
+</div>
