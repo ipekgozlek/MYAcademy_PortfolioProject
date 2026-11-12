@@ -3,6 +3,11 @@
 @await RenderSectionAsync("Styles", required: false)
 @{
     Layout = null;
+    // Aktif menü kontrolü (birden fazla controller verilebilir)
+    string Active(params string[] ctrls) =>
+        ctrls.Any(c => string.Equals(controller, c, StringComparison.OrdinalIgnoreCase)) ? "active" : "";
+
+    var unreadCount = Db.Messages.Count(x => !x.IsRead);
 
     // Breadcrumb için route bilgileri (örn: Admin / Deneyimler / DeneyimListesi)
     var area = ViewContext.RouteData.Values["area"]?.ToString();
@@ -349,50 +354,57 @@
     <!-- ==================== SIDEBAR ==================== -->
     <aside id="sidebar-wrapper">
         <a href="/Admin" class="sidebar-brand">
-            <div class="brand-mark">P</div>
+            <div class="brand-mark">I</div>
             <div>
-                <div class="fw-bold text-white lh-1" style="font-family: 'Plus Jakarta Sans';">Poyraz.</div>
+                <div class="fw-bold text-white lh-1" style="font-family: 'Plus Jakarta Sans';">İpek</div>
                 <small class="text-white-50" style="font-size: 0.72rem;">Portfolio Admin</small>
             </div>
         </a>
 
         <nav class="sidebar-nav">
-            <div class="nav-group-title">Genel</div>
-            <a href="/Admin/Dashboard/Index" class="sidebar-link @Active("Dashboard")">
-                <i class="bi bi-speedometer2"></i><span>Dashboard</span>
-            </a>
+           <div class="nav-group-title">General</div>
+<a href="/Admin/Dashboard/Index" class="sidebar-link @Active("Dashboard")">
+    <i class="bi bi-speedometer2"></i><span>Dashboard</span>
+</a>
 
-            <div class="nav-group-title">İçerik</div>
-            <a href="/Admin/About/Index" class="sidebar-link @Active("About")">
-                <i class="bi bi-person"></i><span>Hakkımda</span>
-            </a>
-            <a href="/Admin/Education/Index" class="sidebar-link @Active("Education")">
-                <i class="bi bi-mortarboard"></i><span>Eğitim</span>
-            </a>
-            <a href="/Admin/Experience/ExperienceList" class="sidebar-link @Active("Deneyimler")">
-                <i class="bi bi-briefcase"></i><span>Deneyimler</span>
-            </a>
-            <a href="/Admin/Skill/Index" class="sidebar-link @Active("Skill")">
-                <i class="bi bi-code-slash"></i><span>Yetenekler</span>
-            </a>
-            <a href="/Admin/Project/Index" class="sidebar-link @Active("Project")">
-                <i class="bi bi-grid"></i><span>Projeler</span>
-            </a>
+<div class="nav-group-title">Content</div>
+<a href="/Admin/HeroSection" class="sidebar-link @Active("HeroSection")">
+    <i class="bi bi-house"></i><span>Home</span>
+</a>
+<a href="/Admin/About" class="sidebar-link @Active("About")">
+    <i class="bi bi-person"></i><span>About Me</span>
+</a>
+<a href="/Admin/Education" class="sidebar-link @Active("Education")">
+    <i class="bi bi-mortarboard"></i><span>Education</span>
+</a>
+<a href="/Admin/Experience/ExperienceList" class="sidebar-link @Active("Experience")">
+    <i class="bi bi-briefcase"></i><span>Experience</span>
+</a>
+<a href="/Admin/Skill" class="sidebar-link @Active("Skill", "SkillCategory")">
+    <i class="bi bi-code-slash"></i><span>Skills</span>
+</a>
+<a href="/Admin/Project" class="sidebar-link @Active("Project")">
+    <i class="bi bi-grid"></i><span>Projects</span>
+</a>
 
-            <div class="nav-group-title">İletişim & Sistem</div>
-            <a href="/Admin/Message/MessageList" class="sidebar-link @Active("Message")">
-                <i class="bi bi-envelope"></i><span>Mesajlar</span>
-            </a>
-            <a href="/Admin/Setting/Index" class="sidebar-link @Active("Setting")">
-                <i class="bi bi-gear"></i><span>Ayarlar</span>
-            </a>
+<div class="nav-group-title">Communication & System</div>
+<a href="/Admin/Message/MessageList" class="sidebar-link @Active("Message")">
+    <i class="bi bi-envelope"></i><span>Messages</span>
+    @if (unreadCount > 0)
+    {
+        <span class="ms-auto badge rounded-pill" style="background:var(--primary-accent); font-size:.7rem;">@unreadCount</span>
+    }
+</a>
+<a href="/Admin/Setting" class="sidebar-link @Active("Setting")">
+    <i class="bi bi-gear"></i><span>Settings</span>
+</a> 
         </nav>
 
         <div class="sidebar-user">
-            <div class="user-avatar">MY</div>
+            <div class="user-avatar">IS</div>
             <div class="overflow-hidden">
-                <div class="fw-semibold text-white text-truncate" style="font-size: 0.83rem;">Murat Yücedağ</div>
-                <div style="font-size: 0.7rem; color: #B3BFDF;">Yönetici</div>
+                <div class="fw-semibold text-white text-truncate" style="font-size: 0.83rem;">İpek Sertel</div>
+                <div style="font-size: 0.7rem; color: #B3BFDF;">Administrator</div>
             </div>
         </div>
     </aside>
@@ -405,31 +417,31 @@
         <!-- NAVBAR -->
         <header class="admin-navbar">
             <div class="d-flex align-items-center gap-3">
-                <button type="button" class="nav-icon-btn d-lg-none" onclick="toggleSidebar()" aria-label="Menü">
+                <button type="button" class="nav-icon-btn d-lg-none" onclick="toggleSidebar()" aria-label="Menu">
                     <i class="bi bi-list"></i>
                 </button>
-                <span class="fw-semibold d-none d-sm-inline" style="font-family: 'Plus Jakarta Sans';">Yönetim Paneli</span>
+                <span class="fw-semibold d-none d-sm-inline" style="font-family: 'Plus Jakarta Sans';">Administration Panel</span>
             </div>
 
             <div class="d-flex align-items-center gap-2">
-                <a href="/" target="_blank" class="nav-icon-btn" title="Siteyi Görüntüle">
+                <a href="/Default/Index" target="_blank" class="nav-icon-btn" title="View Site">
                     <i class="bi bi-box-arrow-up-right"></i>
                 </a>
-                <a href="/Admin/Message/Index" class="nav-icon-btn" title="Mesajlar">
+                <a href="/Admin/Message/MessageList" class="nav-icon-btn position-relative" title="Messages">
                     <i class="bi bi-envelope"></i>
                 </a>
 
                 <div class="dropdown">
                     <button class="nav-user-btn" data-bs-toggle="dropdown" aria-expanded="false">
-                        <div class="user-avatar">MY</div>
-                        <span class="fw-semibold d-none d-md-inline" style="font-size: 0.85rem;">Murat Yücedağ</span>
+                        <div class="user-avatar">IS</div>
+                        <span class="fw-semibold d-none d-md-inline" style="font-size: 0.85rem;">İpek Sertel</span>
                         <i class="bi bi-chevron-down small text-secondary d-none d-md-inline"></i>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="/Admin/Profile/Index"><i class="bi bi-person-circle"></i> Profilim</a></li>
-                        <li><a class="dropdown-item" href="/Admin/Setting/Index"><i class="bi bi-gear"></i> Ayarlar</a></li>
+                        <li><a class="dropdown-item" href="/Admin/Profile/Index"><i class="bi bi-person-circle"></i> Profile</a></li>
+                        <li><a class="dropdown-item" href="/Admin/Setting/Index"><i class="bi bi-gear"></i> Settings</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item text-danger" href="/Login/Logout"><i class="bi bi-box-arrow-right"></i> Çıkış Yap</a></li>
+                        <li><a class="dropdown-item text-danger" href="/Login/Logout"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
                     </ul>
                 </div>
             </div>
@@ -463,9 +475,9 @@
 
         <!-- FOOTER -->
         <footer class="admin-footer">
-            <span>© @DateTime.Now.Year Poyraz. Portfolio Admin — Tüm hakları saklıdır.</span>
+            <span>© @DateTime.Now.Year İpek Sertel. Portfolio Admin — All rights reserved.</span>
             <span>
-                <a href="/" target="_blank">Siteyi Görüntüle</a>
+                <a href="/" target="_blank">View Site</a>
                 <span class="mx-2">•</span>
                 <span>v1.0</span>
             </span>
