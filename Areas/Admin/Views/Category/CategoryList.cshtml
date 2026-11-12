@@ -1,0 +1,73 @@
+﻿@model List<MYAcademy_PortfolioProject.Entities.Category>
+@{
+    ViewData["Title"] = "Project Categories";
+    Layout = "~/Areas/Admin/Views/AdminLayout/_AdminLayout.cshtml";
+}
+
+<div class="list-card">
+    <div class="list-card-header">
+        <div class="d-flex align-items-center gap-3">
+            <div class="list-card-icon"><i class="bi bi-tags"></i></div>
+            <div>
+                <h5 class="mb-0 fw-bold">Project Categories</h5>
+                <small class="text-secondary">Used as filters in the "My Projects" section.</small>
+            </div>
+        </div>
+        <div class="d-flex gap-2">
+            <a asp-area="Admin" asp-controller="Project" asp-action="ProjectList" class="btn btn-soft">
+                <i class="bi bi-grid me-1"></i> Projects
+            </a>
+            <a asp-area="Admin" asp-controller="Category" asp-action="CreateCategory" class="btn btn-accent">
+                <i class="bi bi-plus-lg me-1"></i> New Category
+            </a>
+        </div>
+    </div>
+
+    <table class="list-table">
+        <thead>
+            <tr>
+                <th>Category</th>
+                <th>Projects</th>
+                <th class="text-end">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="cell-title">@item.CategoryName</td>
+                    <td><span class="date-chip">@(item.Projects?.Count ?? 0) projects</span></td>
+                    <td class="text-end">
+                        <a asp-area="Admin" asp-controller="Category" asp-action="UpdateCategory" asp-route-id="@item.CategoryId"
+                           class="icon-btn" title="Edit"><i class="bi bi-pencil"></i></a>
+                        <a asp-area="Admin" asp-controller="Category" asp-action="DeleteCategory" asp-route-id="@item.CategoryId"
+                           class="icon-btn danger js-delete" title="Delete"><i class="bi bi-trash3"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @if (!Model.Any())
+    {
+        <div class="empty-state"><i class="bi bi-tags"></i>No categories yet.</div>
+    }
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.all.min.js"></script>
+<script>
+    document.querySelectorAll('.js-delete').forEach(a => a.addEventListener('click', e => {
+        e.preventDefault();
+        Swal.fire({
+            title: 'Delete this category?', text: "You won't be able to revert this!", icon: 'warning',
+            showCancelButton: true, confirmButtonText: 'Yes, delete it', cancelButtonText: 'Cancel',
+            confirmButtonColor: '#c0342b', cancelButtonColor: '#94a3b8', reverseButtons: true
+        }).then(r => { if (r.isConfirmed) location.href = a.href; });
+    }));
+
+    // Başarı ve hata bildirimleri
+    const success = @Json.Serialize(TempData["Success"]);
+    const error = @Json.Serialize(TempData["Error"]);
+    if (success) Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: success, showConfirmButton: false, timer: 2500 });
+    if (error) Swal.fire({ icon: 'error', title: 'Cannot delete', text: error, confirmButtonColor: '#8276D9' });
+</script>

@@ -9,5 +9,6 @@
         public string Location { get; set; }
         public string Github { get; set; }
         public string SubDescription { get; set; }
+        public string? CvFilePath { get; set; }
     }
 }

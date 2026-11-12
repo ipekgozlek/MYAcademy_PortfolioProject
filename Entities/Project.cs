@@ -15,7 +15,8 @@ namespace MYAcademy_PortfolioProject.Entities
         public string? GithubUrl { get; set; }
         public string? LiveUrl { get; set; }          // Canlı demo linki
         public string? CoverImageUrl { get; set; }
-        public string? Technologies { get; set; }    
+        public string? Technologies { get; set; }
+        public bool IsActive { get; set; }
 
         [Range(1, int.MaxValue, ErrorMessage = "Please select a category.")]
         public int CategoryId { get; set; }         

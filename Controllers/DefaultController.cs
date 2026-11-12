@@ -16,6 +16,24 @@ namespace MYAcademy_PortfolioProject.Controllers
         {
             return View();
         }
+
+        public IActionResult DownloadCv([FromServices] IWebHostEnvironment env)
+        {
+            var path = _context.Contacts.Select(x => x.CvFilePath).FirstOrDefault();
+            if (string.IsNullOrEmpty(path))
+                return RedirectToAction("Index");
+
+            var fullPath = Path.Combine(env.WebRootPath, path.TrimStart('/'));
+            if (!System.IO.File.Exists(fullPath))
+                return RedirectToAction("Index");
+
+            var name = _context.Abouts.Select(x => x.NameSurname).FirstOrDefault() ?? "CV";
+            var downloadName = name.Replace(" ", "_") + "_CV.pdf";
+
+            return PhysicalFile(fullPath, "application/pdf", downloadName);
+        }
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult SendMessage(Message message)

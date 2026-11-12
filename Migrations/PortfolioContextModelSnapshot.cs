@@ -88,6 +88,9 @@ namespace MYAcademy_PortfolioProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ContactId"));
 
+                    b.Property<string>("CvFilePath")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -279,6 +282,9 @@ namespace MYAcademy_PortfolioProject.Migrations
 
                     b.Property<string>("GithubUrl")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<string>("LiveUrl")
                         .HasColumnType("nvarchar(max)");

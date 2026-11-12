@@ -1,30 +1,27 @@
 ﻿    
-<link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />    
-@await RenderSectionAsync("Styles", required: false)
+@inject MYAcademy_PortfolioProject.Context.PortfolioContext Db
 @{
     Layout = null;
-    // Aktif menü kontrolü (birden fazla controller verilebilir)
-    string Active(params string[] ctrls) =>
-        ctrls.Any(c => string.Equals(controller, c, StringComparison.OrdinalIgnoreCase)) ? "active" : "";
 
-    var unreadCount = Db.Messages.Count(x => !x.IsRead);
-
-    // Breadcrumb için route bilgileri (örn: Admin / Deneyimler / DeneyimListesi)
+    // Breadcrumb için route bilgileri
     var area = ViewContext.RouteData.Values["area"]?.ToString();
     var controller = ViewContext.RouteData.Values["controller"]?.ToString() ?? "";
     var action = ViewContext.RouteData.Values["action"]?.ToString() ?? "";
     var pageTitle = ViewData["Title"]?.ToString() ?? action;
 
-    // Aktif menü kontrolü
-    string Active(string ctrl) =>
-        string.Equals(controller, ctrl, StringComparison.OrdinalIgnoreCase) ? "active" : "";
+    // Aktif menü kontrolü (birden fazla controller verilebilir)
+    string Active(params string[] ctrls) =>
+        ctrls.Any(c => string.Equals(controller, c, StringComparison.OrdinalIgnoreCase)) ? "active" : "";
+
+    // Menüdeki okunmamış mesaj rozeti
+    var unreadCount = Db.Messages.Count(x => !x.IsRead);
 }
 <!DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@pageTitle | Portfolyo Admin</title>
+    <title>@pageTitle | Portfolio Admin</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -346,8 +343,10 @@
         }
     </style>
 
-
+        <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+    @await RenderSectionAsync("Styles", required: false)
 </head>
+
 
 <body>
 
@@ -383,7 +382,7 @@
 <a href="/Admin/Skill" class="sidebar-link @Active("Skill", "SkillCategory")">
     <i class="bi bi-code-slash"></i><span>Skills</span>
 </a>
-<a href="/Admin/Project" class="sidebar-link @Active("Project")">
+<a href="/Admin/Project" class="sidebar-link @Active("Project", "Category")">
     <i class="bi bi-grid"></i><span>Projects</span>
 </a>
 

@@ -1,0 +1,33 @@
+﻿@model MYAcademy_PortfolioProject.Entities.Category
+@{
+    var isNew = Model.CategoryId == 0;
+    ViewData["Title"] = isNew ? "New Category" : "Edit Category";
+    Layout = "~/Areas/Admin/Views/AdminLayout/_AdminLayout.cshtml";
+}
+
+<div class="form-card" style="max-width:640px;">
+    <form asp-area="Admin" asp-controller="Category" asp-action="Save" method="post">
+        <input type="hidden" asp-for="CategoryId" />
+
+        <div class="form-card-header">
+            <div class="form-card-icon"><i class="bi bi-tags"></i></div>
+            <div>
+                <h5 class="mb-0 fw-bold">@ViewData["Title"]</h5>
+                <small class="text-secondary">e.g. Web Uygulamaları, Dashboard, API Projeleri</small>
+            </div>
+        </div>
+
+        <div class="form-card-body">
+            <label asp-for="CategoryName" class="form-label">Category Name <span class="req">*</span></label>
+            <input asp-for="CategoryName" class="form-control" />
+            <span asp-validation-for="CategoryName" class="text-danger small"></span>
+        </div>
+
+        <div class="form-card-footer">
+            <a asp-area="Admin" asp-controller="Category" asp-action="CategoryList" class="btn btn-soft">
+                <i class="bi bi-arrow-left me-1"></i> Cancel
+            </a>
+            <button type="submit" class="btn btn-accent"><i class="bi bi-check2-circle me-1"></i> Save</button>
+        </div>
+    </form>
+</div>

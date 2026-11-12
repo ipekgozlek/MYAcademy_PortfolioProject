@@ -4,6 +4,7 @@
     Layout = "~/Areas/Admin/Views/AdminLayout/_AdminLayout.cshtml";
 }
 
+<!-- ===== 1) AYARLAR FORMU ===== -->
 <div class="form-card">
     <form asp-area="Admin" asp-controller="Setting" asp-action="Index" method="post">
         <input type="hidden" asp-for="ContactId" />
@@ -57,8 +58,64 @@
     </form>
 </div>
 
+<!-- ===== 2) CV YÜKLEME KARTI (YENİ) ===== -->
+<div class="form-card mt-4">
+    <div class="form-card-header">
+        <div class="form-card-icon"><i class="bi bi-file-earmark-pdf"></i></div>
+        <div>
+            <h5 class="mb-0 fw-bold">CV / Resume</h5>
+            <small class="text-secondary">Downloaded by the "Download CV" button on your website. PDF only, max 5 MB.</small>
+        </div>
+    </div>
+
+    <div class="form-card-body">
+        @if (!string.IsNullOrEmpty(Model.CvFilePath))
+        {
+            <div class="status-box mb-4">
+                <div class="d-flex align-items-center gap-3">
+                    <i class="bi bi-file-earmark-pdf-fill fs-3" style="color:#c0342b;"></i>
+                    <div>
+                        <div class="fw-semibold" style="font-size:.86rem;">Current CV is active</div>
+                        <small class="text-secondary">Uploading a new file will replace it.</small>
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+                    <a href="@Model.CvFilePath" target="_blank" class="icon-btn" title="View"><i class="bi bi-eye"></i></a>
+                    <a asp-area="Admin" asp-controller="Setting" asp-action="DeleteCv" class="icon-btn danger js-delete-cv" title="Remove">
+                        <i class="bi bi-trash3"></i>
+                    </a>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-warning small py-2">No CV uploaded yet. The "CV İndir" button is hidden on the website.</div>
+        }
+
+        <form asp-area="Admin" asp-controller="Setting" asp-action="UploadCv" method="post" enctype="multipart/form-data"
+              class="d-flex gap-2 flex-wrap">
+            <input type="file" name="cvFile" accept=".pdf,application/pdf" class="form-control" style="max-width:420px;" required />
+            <button type="submit" class="btn btn-accent"><i class="bi bi-upload me-1"></i> Upload CV</button>
+        </form>
+    </div>
+</div>
+
+<!-- ===== 3) SCRIPTLER ===== -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.all.min.js"></script>
 <script>
-    const flash = @Json.Serialize(TempData["Success"]);
-    if (flash) Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: flash, showConfirmButton: false, timer: 2500 });
+    // CV silme onayı
+    document.querySelectorAll('.js-delete-cv').forEach(a => a.addEventListener('click', e => {
+        e.preventDefault();
+        Swal.fire({
+            title: 'Remove your CV?', text: 'The download button will be hidden on the website.', icon: 'warning',
+            showCancelButton: true, confirmButtonText: 'Yes, remove', cancelButtonText: 'Cancel',
+            confirmButtonColor: '#c0342b', cancelButtonColor: '#94a3b8', reverseButtons: true
+        }).then(r => { if (r.isConfirmed) location.href = a.href; });
+    }));
+
+    // Başarı ve hata bildirimleri
+    const success = @Json.Serialize(TempData["Success"]);
+    const error = @Json.Serialize(TempData["Error"]);
+    if (success) Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: success, showConfirmButton: false, timer: 2500 });
+    if (error) Swal.fire({ icon: 'error', title: 'Upload failed', text: error, confirmButtonColor: '#8276D9' });
 </script>
