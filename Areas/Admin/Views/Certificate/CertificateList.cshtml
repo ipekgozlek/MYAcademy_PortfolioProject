@@ -1,0 +1,82 @@
+@model List<Certificate>
+@{
+    ViewData["Title"] = "Certificates";
+    Layout = "~/Areas/Admin/Views/AdminLayout/_AdminLayout.cshtml";
+}
+
+<div class="list-card">
+    <div class="list-card-header">
+        <div class="d-flex align-items-center gap-3">
+            <div class="list-card-icon"><i class="bi bi-award"></i></div>
+            <div>
+                <h5 class="mb-0 fw-bold">Certificates</h5>
+                <small class="text-secondary">Newest first. Passive certificates are hidden on the website.</small>
+            </div>
+        </div>
+        <a asp-area="Admin" asp-controller="Certificate" asp-action="CreateCertificate" class="btn btn-accent">
+            <i class="bi bi-plus-lg me-1"></i> New Certificate
+        </a>
+    </div>
+
+    <table class="list-table">
+        <thead>
+            <tr>
+                <th>Certificate / Issuer</th>
+                <th>Date</th>
+                <th>Link</th>
+                <th>Status</th>
+                <th class="text-end">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <div class="cell-title">@item.Title</div>
+                        <div class="cell-sub">@item.Issuer</div>
+                    </td>
+                    <td><span class="date-chip"><i class="bi bi-calendar3"></i> @item.DateText</span></td>
+                    <td>
+                        @if (!string.IsNullOrWhiteSpace(item.CertificateUrl))
+                        {
+                            <a href="@item.CertificateUrl" target="_blank" rel="noopener" class="icon-btn" title="Open certificate"><i class="bi bi-box-arrow-up-right"></i></a>
+                        }
+                    </td>
+                    <td>
+                        <a asp-area="Admin" asp-controller="Certificate" asp-action="ToggleStatus" asp-route-id="@item.CertificateId"
+                           class="status-pill @(item.IsActive ? "on" : "off")" title="Click to toggle">
+                            @(item.IsActive ? "Active" : "Passive")
+                        </a>
+                    </td>
+                    <td class="text-end">
+                        <a asp-area="Admin" asp-controller="Certificate" asp-action="UpdateCertificate" asp-route-id="@item.CertificateId"
+                           class="icon-btn" title="Edit"><i class="bi bi-pencil"></i></a>
+                        <a asp-area="Admin" asp-controller="Certificate" asp-action="DeleteCertificate" asp-route-id="@item.CertificateId"
+                           class="icon-btn danger js-delete" title="Delete"><i class="bi bi-trash3"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @if (!Model.Any())
+    {
+        <div class="empty-state"><i class="bi bi-award"></i>No certificates yet.</div>
+    }
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.all.min.js"></script>
+<script>
+    document.querySelectorAll('.js-delete').forEach(a => a.addEventListener('click', e => {
+        e.preventDefault();
+        Swal.fire({
+            title: 'Delete this certificate?', text: "You won't be able to revert this!", icon: 'warning',
+            showCancelButton: true, confirmButtonText: 'Yes, delete it', cancelButtonText: 'Cancel',
+            confirmButtonColor: '#c0342b', cancelButtonColor: '#94a3b8', reverseButtons: true
+        }).then(r => { if (r.isConfirmed) location.href = a.href; });
+    }));
+
+    const flash = @Json.Serialize(TempData["Success"]);
+    if (flash) Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: flash, showConfirmButton: false, timer: 2500 });
+</script>
