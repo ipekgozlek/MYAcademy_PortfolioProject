@@ -34,6 +34,8 @@ namespace MYAcademy_PortfolioProject.Areas.Admin.Controllers
                                          .Select(x => x.CvFilePath)
                                          .FirstOrDefault();
 
+            if (!ModelState.IsValid) return View(contact);
+
             if (contact.ContactId == 0)
                 _context.Contacts.Add(contact);
             else

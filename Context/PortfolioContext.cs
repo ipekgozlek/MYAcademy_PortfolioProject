@@ -5,10 +5,11 @@ namespace MYAcademy_PortfolioProject.Context
 {
     public class PortfolioContext:DbContext
     {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        // Connection string comes from appsettings.json (see Program.cs)
+        public PortfolioContext(DbContextOptions<PortfolioContext> options) : base(options)
         {
-            optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=PortfolioDb;integrated security=true;trust server certificate=true");
         }
+
         public DbSet<About> Abouts { get; set; }
         public DbSet<Education> Educations { get; set; }
         public DbSet<Experience> Experiences { get; set; }
