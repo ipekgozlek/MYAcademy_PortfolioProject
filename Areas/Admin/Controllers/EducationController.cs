@@ -37,6 +37,8 @@ namespace MYAcademy_PortfolioProject.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult CreateEducation(Education education)
         {
+            if (!ModelState.IsValid) return View(education);
+
             _context.Educations.Add(education);
             _context.SaveChanges();
             TempData["Success"] = "Education added";
@@ -54,6 +56,8 @@ namespace MYAcademy_PortfolioProject.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult UpdateEducation(Education education)
         {
+            if (!ModelState.IsValid) return View(education);
+
             _context.Educations.Update(education);
             _context.SaveChanges();
             TempData["Success"] = "Education updated";
