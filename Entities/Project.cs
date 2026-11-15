@@ -7,10 +7,10 @@ namespace MYAcademy_PortfolioProject.Entities
         public int ProjectId { get; set; }
 
         [Required(ErrorMessage = "Title is required.")]
-        public string Title { get; set; }
+        public string Title { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Description is required.")]
-        public string Description { get; set; }
+        public string Description { get; set; } = string.Empty;
 
         public string? GithubUrl { get; set; }
         public string? LiveUrl { get; set; }          // Canlı demo linki
