@@ -25,6 +25,8 @@ namespace MYAcademy_PortfolioProject.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Index(About about)
         {
+            if (!ModelState.IsValid) return View(about);
+
             if (about.AboutId == 0)
                 _context.Abouts.Add(about);    
             else

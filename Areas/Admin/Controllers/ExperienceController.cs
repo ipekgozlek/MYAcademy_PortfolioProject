@@ -29,6 +29,8 @@ namespace MYAcademy_PortfolioProject.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult CreateExperience(Experience experience)
         {
+            if (!ModelState.IsValid) return View(experience);
+
             _context.Experiences.Add(experience);
             _context.SaveChanges();
             TempData["Success"] = "Experience added";
@@ -55,6 +57,8 @@ namespace MYAcademy_PortfolioProject.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult UpdateExperience(Experience experience)
         {
+            if (!ModelState.IsValid) return View(experience);
+
             _context.Experiences.Update(experience);
             _context.SaveChanges();
             TempData["Success"] = "Experience updated";
