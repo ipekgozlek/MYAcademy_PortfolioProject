@@ -27,6 +27,7 @@ Screenshots: add images to a docs/screenshots folder and uncomment the lines bel
 - **Hero & About:** name, title, intro text, profile image and biography
 - **Education & Experience:** CRUD, date ordering, colored Active/Passive status that can be toggled from the list
 - **Skills:** skill categories and skills (one-to-many)
+- **Certificates:** CRUD, date ordering, optional certificate link, Active/Passive status
 - **Projects & Categories:** CRUD, category dropdown, image upload with type/size checks, Active/Passive status
 - **Messages:** read/unread status, search by sender or subject, date sorting, unread counter, Bootstrap Modal detail view; the original message is never edited
 - **Settings:** contact details, social links and CV upload (PDF only)
