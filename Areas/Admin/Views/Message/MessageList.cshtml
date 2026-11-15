@@ -850,6 +850,12 @@
             rows.sort((a, b) => a.dataset.sort.localeCompare(b.dataset.sort) * dir)
                 .forEach(r => tbody.appendChild(r));
         });
+                // Dashboard'dan gelindiyse (?open=ID) o mesajı otomatik aç
+        const openId = new URLSearchParams(location.search).get('open');
+        if (openId) {
+            const row = rows.find(r => r.dataset.id === openId);
+            if (row) openMessage(row);
+        }
 
         // Silme sonrası bildirim
         const flash = @Json.Serialize(TempData["Success"]);
