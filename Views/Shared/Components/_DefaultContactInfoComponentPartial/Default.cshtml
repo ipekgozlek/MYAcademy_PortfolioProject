@@ -5,7 +5,7 @@
 }
 
 <div class="contact-info-card">
-    <h4 class="fs-4 fw-bold mb-3">İletişim Bilgileri</h4>
+    <h4 class="fs-4 fw-bold mb-3">Contact Information</h4>
     <p class="text-secondary mb-4">@Model?.Description</p>
 
     @if (!string.IsNullOrWhiteSpace(Model?.Email))
@@ -13,7 +13,7 @@
         <div class="contact-item">
             <div class="contact-icon bg-icon-purple"><i class="bi bi-envelope"></i></div>
             <div>
-                <div class="text-secondary small fw-medium">E-posta</div>
+                <div class="text-secondary small fw-medium">Email</div>
                 <a href="mailto:@Model.Email" class="text-decoration-none fw-bold text-dark">@Model.Email</a>
             </div>
         </div>
@@ -24,7 +24,7 @@
         <div class="contact-item">
             <div class="contact-icon bg-icon-blue"><i class="bi bi-geo-alt"></i></div>
             <div>
-                <div class="text-secondary small fw-medium">Konum</div>
+                <div class="text-secondary small fw-medium">Location</div>
                 <div class="fw-bold text-dark">@Model.Location</div>
             </div>
         </div>
