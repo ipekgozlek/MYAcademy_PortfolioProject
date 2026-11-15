@@ -76,6 +76,39 @@ namespace MYAcademy_PortfolioProject.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("MYAcademy_PortfolioProject.Entities.Certificate", b =>
+                {
+                    b.Property<int>("CertificateId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CertificateId"));
+
+                    b.Property<string>("CertificateUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DateText")
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Issuer")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.HasKey("CertificateId");
+
+                    b.ToTable("Certificates");
+                });
+
             modelBuilder.Entity("MYAcademy_PortfolioProject.Entities.Contact", b =>
                 {
                     b.Property<int>("ContactId")
