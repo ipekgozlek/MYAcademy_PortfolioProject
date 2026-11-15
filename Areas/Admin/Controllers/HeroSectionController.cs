@@ -24,6 +24,8 @@ namespace MYAcademy_PortfolioProject.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Index(HeroSection hero)
         {
+            if (!ModelState.IsValid) return View(hero);
+
             if (hero.HeroSectionId == 0)
                 _context.HeroSections.Add(hero);
             else
