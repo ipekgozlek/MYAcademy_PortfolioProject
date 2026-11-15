@@ -20,5 +20,6 @@ namespace MYAcademy_PortfolioProject.Context
         public DbSet<Project> Projects { get; set; }
         public DbSet<SkillCategory> SkillCategories { get; set; }
         public DbSet<Skill> Skills { get; set; }
+        public DbSet<Certificate> Certificates { get; set; }
     }
 }
