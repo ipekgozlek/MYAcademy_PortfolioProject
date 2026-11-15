@@ -10,14 +10,14 @@
 <section id="projects">
     <div class="container">
         <div class="text-center mb-4 reveal-on-scroll">
-            <span class="section-eyebrow">SEÇİLMİŞ ÇALIŞMALAR</span>
-            <h2 class="section-title">Projelerim</h2>
-            <p class="section-subtitle">Öğrendiklerimi gerçek ürünlere dönüştürdüğüm çalışmalar.</p>
+            <span class="section-eyebrow">SELECTED WORK</span>
+            <h2 class="section-title">Projects</h2>
+            <p class="section-subtitle">Work where I turned what I learned into real products.</p>
         </div>
 
         <!-- Filtre butonları: veritabanındaki kategorilerden -->
         <div class="d-flex justify-content-center flex-wrap gap-2 mb-5 reveal-on-scroll" id="projectFilterGroup">
-            <button class="filter-btn active" data-filter="all">Tümü</button>
+            <button class="filter-btn active" data-filter="all">All</button>
             @foreach (var c in categories)
             {
                 <button class="filter-btn" data-filter="cat-@c.CategoryId">@c.CategoryName</button>
@@ -63,7 +63,7 @@
                                 @if (!string.IsNullOrWhiteSpace(item.LiveUrl))
                                 {
                                     <a href="@item.LiveUrl" target="_blank" rel="noopener noreferrer" class="project-link-btn text-primary">
-                                        <i class="bi bi-box-arrow-up-right"></i> Canlı Demo
+                                        <i class="bi bi-box-arrow-up-right"></i> Live Demo
                                     </a>
                                 }
                             </div>
@@ -74,7 +74,7 @@
 
             @if (!Model.Any())
             {
-                <p class="text-center text-secondary">Henüz proje eklenmemiş.</p>
+                <p class="text-center text-secondary">No projects added yet.</p>
             }
         </div>
     </div>
