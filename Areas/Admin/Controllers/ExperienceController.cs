@@ -37,9 +37,12 @@ namespace MYAcademy_PortfolioProject.Areas.Admin.Controllers
         public IActionResult DeleteExperience(int id)
         {
             var value = _context.Experiences.Find(id);
-            _context.Experiences.Remove(value);
-            _context.SaveChanges();
-            TempData["Success"] = "Experience deleted";
+            if (value != null)
+            {
+                _context.Experiences.Remove(value);
+                _context.SaveChanges();
+                TempData["Success"] = "Experience deleted";
+            }
             return RedirectToAction("ExperienceList");
         }
         [HttpGet]

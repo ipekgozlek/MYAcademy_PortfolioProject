@@ -1,7 +1,7 @@
 ﻿@model Contact
 @{
 
-    string Url(string link) =>
+    string? Url(string? link) =>
         string.IsNullOrWhiteSpace(link) ? null
         : link.StartsWith("http") ? link
         : "https://" + link;
