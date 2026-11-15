@@ -1,9 +1,9 @@
-﻿@model MYAcademy_PortfolioProject.Entities.Experience
+﻿@model Experience
 @{
     ViewData["Title"] = "Deneyim Güncelle";
     Layout = "~/Areas/Admin/Views/AdminLayout/_AdminLayout.cshtml";
 
-    var workTypes = new List<string> { "Tam Zamanlı", "Yarı Zamanlı", "Staj", "Freelance", "Uzaktan", "Hibrit" };
+    var workTypes = new List<string> { "Full-time", "Part-time", "Internship", "Freelance", "Remote", "Hybrid" };
     // Kayıtlı değer listede yoksa kaybolmasın diye ekle
     if (!string.IsNullOrWhiteSpace(Model?.WorkType) && !workTypes.Contains(Model.WorkType))
     {

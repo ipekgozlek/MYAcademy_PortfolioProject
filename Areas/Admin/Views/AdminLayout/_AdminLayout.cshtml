@@ -17,7 +17,7 @@
     var unreadCount = Db.Messages.Count(x => !x.IsRead);
 }
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="tr" data-bs-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -345,6 +345,7 @@
 
         <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
     @await RenderSectionAsync("Styles", required: false)
+        <link rel="stylesheet" href="~/css/theme-midnight-admin.css" asp-append-version="true" />
 </head>
 
 

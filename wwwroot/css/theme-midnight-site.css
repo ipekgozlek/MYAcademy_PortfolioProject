@@ -1,0 +1,213 @@
+﻿/* ===== Gece Mavisi teması – Site ===== */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+    --bg-primary: #0E1020;
+    --bg-secondary: #12152A;
+    --lavender-accent: #221F45;
+    --soft-blue: #13263F;
+    --mint-green: #10332A;
+    --warm-peach: #3A2418;
+    --text-primary: #ECEBFF;
+    --text-secondary: #9C9EC2;
+    --accent-purple: #8B7CFF;
+    --accent-purple-hover: #A397FF;
+    --border-color: #262A48;
+    --card-bg: #171A30;
+    --glow: #5EE1D9;
+    --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.35);
+    --shadow-hover: 0 16px 40px -10px rgba(139, 124, 255, 0.45);
+    color-scheme: dark;
+    /* Bootstrap'in koyu modunu kendi renklerimize bağla */
+    --bs-body-bg: #0E1020;
+    --bs-body-color: #ECEBFF;
+    --bs-border-color: #262A48;
+    --bs-secondary-color: #9C9EC2;
+    --bs-tertiary-bg: #171A30;
+}
+
+/* Yazı tipleri */
+body {
+    font-family: 'Inter', system-ui, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6, .section-title, .hero-title, .brand-name, .project-title {
+    font-family: 'Space Grotesk', 'Inter', sans-serif;
+    letter-spacing: -0.01em;
+}
+
+/* Arka plandaki renkli bulutlar: mor ve camgöbeği ışıltı */
+.blob-bg {
+    opacity: 0.35;
+}
+
+.blob-1 {
+    background: #6B5CF0;
+}
+
+.blob-2 {
+    background: #1E8C9A;
+}
+
+.blob-3 {
+    background: #3B2C8F;
+}
+
+/* Navbar */
+.custom-navbar {
+    background: rgba(14, 16, 32, 0.78);
+    border-bottom-color: var(--border-color);
+}
+
+    .custom-navbar.scrolled {
+        background: rgba(14, 16, 32, 0.94);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+
+.navbar .nav-link.active, .navbar .nav-link:hover {
+    background-color: var(--lavender-accent);
+}
+
+/* Butonlar */
+.btn-custom-primary {
+    background: linear-gradient(135deg, #7B6CF6 0%, #5B4BE0 100%);
+    box-shadow: 0 6px 22px -6px rgba(139, 124, 255, 0.7);
+}
+
+    .btn-custom-primary:hover {
+        background: linear-gradient(135deg, #8B7CFF 0%, #6A5AF0 100%);
+    }
+
+.btn-custom-outline {
+    background: var(--card-bg);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+}
+
+/* Hero */
+.hero-name-gradient {
+    background: linear-gradient(90deg, #8B7CFF 10%, #5EE1D9 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+.hero-badge, .social-btn {
+    background: var(--card-bg);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+    .social-btn:hover {
+        box-shadow: 0 0 0 1px var(--accent-purple), 0 8px 20px -8px rgba(139, 124, 255, 0.8);
+    }
+
+.hero-image-frame {
+    background: var(--card-bg);
+    border-color: #1F2340;
+    box-shadow: 0 0 0 1px #2A2E52, 0 24px 60px -20px rgba(139, 124, 255, 0.75);
+}
+
+.floating-card {
+    background: rgba(23, 26, 48, 0.92);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+}
+
+/* Kartlar ve kutular */
+.highlight-card, .timeline-marker, .skill-group-card, .skill-chip, .marquee-container,
+.filter-btn, .project-card, .project-thumb-preview, .workflow-step-card, .workflow-arrow,
+.certificate-card, .contact-form-card, footer, .scroll-to-top {
+    background: var(--card-bg);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+.about-visual-box, .contact-info-card {
+    background: linear-gradient(145deg, #1A1D36, var(--bg-secondary));
+    border-color: var(--border-color);
+}
+
+.project-card:hover, .skill-group-card:hover, .highlight-card:hover {
+    border-color: rgba(139, 124, 255, 0.45);
+}
+
+.timeline-marker {
+    box-shadow: 0 0 0 6px var(--bg-primary), 0 0 24px -4px rgba(139, 124, 255, 0.8);
+}
+
+.filter-btn.active {
+    background: var(--accent-purple);
+    color: #0E1020;
+}
+
+.preview-header {
+    background: #1F2340;
+}
+
+.preview-dot {
+    background: #3A3F66;
+}
+
+.preview-skeleton-bar {
+    background: #262A48;
+}
+
+/* İkon kutuları: koyu zeminde okunur renkler */
+.bg-icon-mint {
+    color: #34D399;
+}
+
+.bg-icon-blue {
+    color: #60A5FA;
+}
+
+.bg-icon-peach {
+    color: #FDBA74;
+}
+
+/* İletişim formu */
+.form-control, .form-select {
+    background-color: #12152A;
+    color: var(--text-primary);
+    border-color: var(--border-color);
+}
+
+    .form-control::placeholder {
+        color: #6E7199;
+    }
+
+    .form-control:focus, .form-select:focus {
+        background-color: #171A30;
+        color: var(--text-primary);
+        border-color: var(--accent-purple);
+    }
+
+/* Bootstrap yardımcı sınıfları (koyu zeminde beyaz/siyah kalmasın) */
+.text-dark {
+    color: var(--text-primary) !important;
+}
+
+.bg-white {
+    background-color: var(--card-bg) !important;
+}
+
+.bg-light {
+    background-color: var(--lavender-accent) !important;
+}
+
+.text-secondary {
+    color: var(--text-secondary) !important;
+}
+
+.border-light-subtle {
+    border-color: var(--border-color) !important;
+}
+
+/* Kaydırma çubuğu */
+::-webkit-scrollbar-track {
+    background: #0E1020;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #2A2E52;
+}

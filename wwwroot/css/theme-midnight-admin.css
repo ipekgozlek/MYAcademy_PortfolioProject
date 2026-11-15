@@ -1,0 +1,304 @@
+﻿/* ===== Gece Mavisi teması – Admin ===== */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+    --sidebar-bg: #12142A;
+    --sidebar-surface: #1A1D38;
+    --sidebar-active: #241F52;
+    --sidebar-text: #A9ACD0;
+    --sidebar-border: rgba(139, 124, 255, 0.10);
+    --bg-main: #0B0D1A;
+    --card-bg: #171A30;
+    --text-primary: #ECEBFF;
+    --text-secondary: #9C9EC2;
+    --primary-accent: #8B7CFF;
+    --primary-accent-hover: #A397FF;
+    --border-color: #262A48;
+    --pastel-purple: #221F45;
+    --shadow-subtle: 0 4px 20px rgba(0, 0, 0, 0.35);
+    color-scheme: dark;
+    --bs-body-bg: #0B0D1A;
+    --bs-body-color: #ECEBFF;
+    --bs-border-color: #262A48;
+    --bs-secondary-color: #9C9EC2;
+    --bs-tertiary-bg: #171A30;
+    --bs-secondary-bg: #12152A;
+}
+
+body {
+    font-family: 'Inter', system-ui, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6, .page-header h1, .stat-value, .dash-stat .value {
+    font-family: 'Space Grotesk', 'Inter', sans-serif;
+}
+
+/* Menü ve üst bar */
+#sidebar-wrapper {
+    border-right: 1px solid var(--sidebar-border);
+    box-shadow: none;
+}
+
+.sidebar-link.active {
+    box-shadow: inset 0 0 0 1px rgba(139, 124, 255, 0.35);
+}
+
+    .sidebar-link.active::before {
+        background: #5EE1D9;
+    }
+
+.admin-navbar {
+    background: rgba(11, 13, 26, 0.9);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.nav-icon-btn, .nav-user-btn {
+    background: var(--card-bg);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+.admin-footer {
+    background: var(--bg-main);
+    border-top: 1px solid var(--border-color);
+}
+
+.dropdown-menu {
+    background: var(--card-bg);
+    border-color: var(--border-color);
+}
+
+.dropdown-item {
+    color: var(--text-primary);
+}
+
+    .dropdown-item:hover {
+        background: var(--pastel-purple);
+    }
+
+.breadcrumb-item + .breadcrumb-item::before {
+    color: #4A4F78;
+}
+
+/* Kartlar, tablolar, formlar (admin.css + sayfa içi stiller) */
+.list-card, .form-card, .stat, .inbox-card, .dash-stat, .card {
+    background: var(--card-bg);
+    border-color: var(--border-color);
+}
+
+.list-table th, .inbox-table th {
+    background: #12152A;
+    color: var(--text-secondary);
+    border-color: var(--border-color);
+}
+
+.list-table td, .inbox-table td {
+    border-color: #1F2340;
+    color: var(--text-primary);
+}
+
+.list-table tbody tr:hover, .inbox-table tbody tr:hover, .msg-item:hover {
+    background: #1C1F3A;
+}
+
+.form-card-footer {
+    background: #12152A;
+    border-color: var(--border-color);
+}
+
+.form-card .form-control, .form-card .form-select, .form-control, .form-select,
+.search input, .sort-select, .status-box {
+    background-color: #12152A;
+    color: var(--text-primary);
+    border-color: var(--border-color);
+}
+
+    .form-control::placeholder, .search input::placeholder {
+        color: #6E7199;
+    }
+
+    .form-control:focus, .form-select:focus {
+        background-color: #171A30;
+        color: var(--text-primary);
+        border-color: var(--primary-accent);
+        box-shadow: 0 0 0 3px rgba(139, 124, 255, 0.2);
+    }
+
+/* Butonlar ve küçük etiketler */
+.btn-accent {
+    background: linear-gradient(135deg, #7B6CF6, #5B4BE0);
+    border-color: #6A5AF0;
+    box-shadow: 0 6px 20px -6px rgba(139, 124, 255, 0.7);
+    color: #fff;
+}
+
+    .btn-accent:hover {
+        background: linear-gradient(135deg, #8B7CFF, #6A5AF0);
+        color: #fff;
+    }
+
+.btn-soft, .icon-btn {
+    background: #12152A;
+    border-color: var(--border-color);
+    color: var(--text-secondary);
+}
+
+    .btn-soft:hover, .icon-btn:hover {
+        background: #1C1F3A;
+        color: var(--primary-accent);
+        border-color: var(--primary-accent);
+    }
+
+    .icon-btn.danger, .btn-soft-danger {
+        background: #12152A;
+        color: #FB7185;
+        border-color: #4A2233;
+    }
+
+        .icon-btn.danger:hover, .btn-soft-danger:hover {
+            background: #3A1622;
+            color: #FB7185;
+        }
+
+.date-chip {
+    background: #1F2340;
+    color: var(--text-secondary);
+}
+
+.type-chip {
+    background: var(--pastel-purple);
+    color: #B8AEFF;
+}
+
+.status-pill.on, .pill.on, .badge-soft.read, .mp-badge.read {
+    background: #10332A;
+    color: #34D399;
+}
+
+.status-pill.off, .pill.off {
+    background: #3A1622;
+    color: #FB7185;
+}
+
+.unread-dot, .dot {
+    background: #5EE1D9;
+    box-shadow: 0 0 8px #5EE1D9;
+}
+
+/* Dashboard renkli ikon kutuları */
+.c-green {
+    background: #10332A;
+    color: #34D399;
+}
+
+.c-blue {
+    background: #13263F;
+    color: #60A5FA;
+}
+
+.c-amber {
+    background: #3A2A12;
+    color: #FBBF24;
+}
+
+.c-teal {
+    background: #0F3236;
+    color: #5EE1D9;
+}
+
+.c-rose {
+    background: #3A1622;
+    color: #FB7185;
+}
+
+.cat-bar {
+    background: #1F2340;
+}
+
+    .cat-bar > div {
+        background: linear-gradient(90deg, #8B7CFF, #5EE1D9);
+    }
+
+.quick-btn {
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+    .quick-btn:hover {
+        background: #1C1F3A;
+    }
+
+/* Mesajlar sayfası */
+.inbox {
+    --line: #262A48;
+    --muted: #9C9EC2;
+    --ink: #ECEBFF;
+    --brand-soft: #221F45;
+}
+
+.stat-icon.green {
+    background: #10332A;
+    color: #34D399;
+}
+
+.stat-icon.gray {
+    background: #1F2340;
+    color: #A9ACD0;
+}
+
+.mp-text {
+    background: #12152A;
+    border-color: var(--border-color);
+}
+
+.modal-content {
+    background: var(--card-bg);
+    color: var(--text-primary);
+}
+
+.msg-modal .modal-footer {
+    background: #12152A;
+    border-color: var(--border-color);
+}
+
+/* SweetAlert2 pencereleri */
+.swal2-popup {
+    background: #171A30 !important;
+    color: #ECEBFF !important;
+    border: 1px solid #262A48;
+}
+
+.swal2-title, .swal2-html-container {
+    color: #ECEBFF !important;
+}
+
+/* Bootstrap yardımcı sınıfları */
+.text-dark {
+    color: var(--text-primary) !important;
+}
+
+.bg-white {
+    background-color: var(--card-bg) !important;
+}
+
+.bg-light {
+    background-color: #1F2340 !important;
+    color: var(--text-primary) !important;
+}
+
+.text-secondary {
+    color: var(--text-secondary) !important;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #2A2E52;
+}
+/* Etiket içine (inline) yazılmış açık renkler */
+#imagePreview {
+    background-color: #12152A !important;
+    border: 1px dashed #2A2E52;
+}
+
+.list-table img {
+    background-color: #1F2340 !important;
+}
