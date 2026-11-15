@@ -1,6 +1,10 @@
 # İpek Sertel · Portfolio
 
 A personal portfolio website with its own admin panel, built with **ASP.NET Core MVC** and **Entity Framework Core (Code First)**. Every section of the public site is managed from the admin panel and stored in SQL Server.
+<img width="1503" height="762" alt="image" src="https://github.com/user-attachments/assets/1a1848f2-0aa0-43ba-abc5-5c34c4c24de9" />
+
+<img width="1518" height="770" alt="image" src="https://github.com/user-attachments/assets/7f364b67-a7a3-4c41-aa25-e7d21cbb9c59" />
+<img width="1503" height="775" alt="image" src="https://github.com/user-attachments/assets/713c759d-49b3-4aff-a3b7-54d9e2ef8e95" />
 
 
 <!--
