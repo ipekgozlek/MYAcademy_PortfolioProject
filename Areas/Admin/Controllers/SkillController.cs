@@ -22,7 +22,7 @@ namespace MYAcademy_PortfolioProject.Areas.Admin.Controllers
         {
             var values = _context.Skills
                                  .Include(x => x.SkillCategory)
-                                 .OrderBy(x => x.SkillCategory.Title)
+                                 .OrderBy(x => x.SkillCategory!.Title)
                                  .ThenBy(x => x.Title)
                                  .ToList();
             return View(values);
