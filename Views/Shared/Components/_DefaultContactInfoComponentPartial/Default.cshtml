@@ -1,7 +1,7 @@
 ﻿@model Contact
 @{
-    string Url(string link) => string.IsNullOrWhiteSpace(link) ? null : link.StartsWith("http") ? link : "https://" + link;
-    string Clean(string link) => (link ?? "").Replace("https://", "").Replace("http://", "").Replace("www.", "").TrimEnd('/');
+    string? Url(string? link) => string.IsNullOrWhiteSpace(link) ? null : link.StartsWith("http") ? link : "https://" + link;
+    string Clean(string? link) => (link ?? "").Replace("https://", "").Replace("http://", "").Replace("www.", "").TrimEnd('/');
 }
 
 <div class="contact-info-card">

@@ -42,8 +42,8 @@ namespace MYAcademy_PortfolioProject.Controllers
             if (!ModelState.IsValid)
             {
                 var errors = ModelState
-                    .Where(x => x.Value.Errors.Any())
-                    .ToDictionary(x => x.Key, x => x.Value.Errors.First().ErrorMessage);
+                    .Where(x => x.Value!.Errors.Any())
+                    .ToDictionary(x => x.Key, x => x.Value!.Errors.First().ErrorMessage);
 
                 return Json(new { success = false, errors });
             }
