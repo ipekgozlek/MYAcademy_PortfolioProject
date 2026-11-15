@@ -1,0 +1,62 @@
+@model Certificate
+@{
+    var isNew = Model.CertificateId == 0;
+    ViewData["Title"] = isNew ? "New Certificate" : "Edit Certificate";
+    Layout = "~/Areas/Admin/Views/AdminLayout/_AdminLayout.cshtml";
+}
+
+<div class="form-card">
+    <form asp-area="Admin" asp-controller="Certificate" asp-action="Save" method="post">
+        <input type="hidden" asp-for="CertificateId" />
+
+        <div class="form-card-header">
+            <div class="form-card-icon"><i class="bi bi-award"></i></div>
+            <div>
+                <h5 class="mb-0 fw-bold">@ViewData["Title"]</h5>
+                <small class="text-secondary">Shown as a card in the "Certificates" section of your website.</small>
+            </div>
+        </div>
+
+        <div class="form-card-body">
+            <div asp-validation-summary="All" class="text-danger small mb-3"></div>
+            <div class="row g-4">
+                <div class="col-md-8">
+                    <label asp-for="Title" class="form-label">Certificate Title <span class="req">*</span></label>
+                    <input asp-for="Title" class="form-control" placeholder="e.g. Front-End Development Certificate" required />
+                </div>
+                <div class="col-md-4">
+                    <label asp-for="DateText" class="form-label">Date</label>
+                    <input asp-for="DateText" class="form-control" placeholder="e.g. Sep 2026" />
+                    <small class="text-secondary">Used for ordering (newest first).</small>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Issuer" class="form-label">Issuer <span class="req">*</span></label>
+                    <input asp-for="Issuer" class="form-control" placeholder="e.g. Coderspace, Udemy" required />
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="CertificateUrl" class="form-label">Certificate Link</label>
+                    <input asp-for="CertificateUrl" class="form-control" placeholder="https://..." />
+                    <small class="text-secondary">Optional. Adds a "View Certificate" button on the website.</small>
+                </div>
+                <div class="col-12">
+                    <div class="status-box">
+                        <div>
+                            <div class="fw-semibold" style="font-size:.86rem;">Publish on website</div>
+                            <small class="text-secondary">Passive certificates are hidden on the homepage.</small>
+                        </div>
+                        <div class="form-check form-switch m-0">
+                            <input asp-for="IsActive" class="form-check-input" type="checkbox" role="switch" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-card-footer">
+            <a asp-area="Admin" asp-controller="Certificate" asp-action="CertificateList" class="btn btn-soft">
+                <i class="bi bi-arrow-left me-1"></i> Cancel
+            </a>
+            <button type="submit" class="btn btn-accent"><i class="bi bi-check2-circle me-1"></i> Save</button>
+        </div>
+    </form>
+</div>
