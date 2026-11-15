@@ -31,7 +31,7 @@ namespace MYAcademy_PortfolioProject.Areas.Admin.Controllers
         public IActionResult CreateSkill()
         {
             LoadCategories();
-            return View("Form", new Skill { Level = "Orta" });
+            return View("Form", new Skill { Level = "Intermediate" });
         }
 
         public IActionResult UpdateSkill(int id)

@@ -3,7 +3,7 @@
     ViewData["Title"] = "Skills";
     Layout = "~/Areas/Admin/Views/AdminLayout/_AdminLayout.cshtml";
 
-    string Dot(string level) => level == "İleri" ? "lvl-high" : level == "Orta" ? "lvl-mid" : "lvl-low";
+    string Dot(string level) => level == "Advanced" ? "lvl-high" : level == "Intermediate" ? "lvl-mid" : "lvl-low";
 }
 
 <div class="list-card">
@@ -13,9 +13,9 @@
             <div>
                 <h5 class="mb-0 fw-bold">Skills</h5>
                 <small class="text-secondary">
-                    <span class="level-dot lvl-high"></span> İleri &nbsp;
-                    <span class="level-dot lvl-mid"></span> Orta &nbsp;
-                    <span class="level-dot lvl-low"></span> Başlangıç
+                    <span class="level-dot lvl-high"></span> Advanced &nbsp;
+                    <span class="level-dot lvl-mid"></span> Intermediate &nbsp;
+                    <span class="level-dot lvl-low"></span> Beginner
                 </small>
             </div>
         </div>

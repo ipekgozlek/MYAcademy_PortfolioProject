@@ -2,8 +2,8 @@
 @{
     var colors = new[] { "bg-icon-purple", "bg-icon-blue", "bg-icon-mint", "bg-icon-peach" };
 
-    int Order(string level) => level == "İleri" ? 0 : level == "Orta" ? 1 : 2;
-    string Dot(string level) => level == "İleri" ? "lvl-high" : level == "Orta" ? "lvl-mid" : "lvl-low";
+    int Order(string level) => level == "Advanced" ? 0 : level == "Intermediate" ? 1 : 2;
+    string Dot(string level) => level == "Advanced" ? "lvl-high" : level == "Intermediate" ? "lvl-mid" : "lvl-low";
 
 
     var count = Model.Count;
@@ -23,9 +23,9 @@
 <section id="skills" style="background-color: var(--bg-secondary);">
     <div class="container">
         <div class="text-center mb-5 reveal-on-scroll">
-            <span class="section-eyebrow">TEKNİK YETKİNLİKLER</span>
-            <h2 class="section-title">Yeteneklerim</h2>
-            <p class="section-subtitle">Fikirleri çalışan yazılımlara dönüştürürken kullandığım teknolojiler.</p>
+            <span class="section-eyebrow">TECHNICAL SKILLS</span>
+            <h2 class="section-title">Skills</h2>
+            <p class="section-subtitle">Technologies I use to turn ideas into working software.</p>
         </div>
 
         <div class="row g-4">
@@ -58,9 +58,9 @@
         @if (Model.Any())
         {
             <div class="text-center text-secondary small mt-4">
-                <span class="level-dot lvl-high"></span> İleri &nbsp;&nbsp;
-                <span class="level-dot lvl-mid"></span> Orta &nbsp;&nbsp;
-                <span class="level-dot lvl-low"></span> Başlangıç
+                <span class="level-dot lvl-high"></span> Advanced &nbsp;&nbsp;
+                <span class="level-dot lvl-mid"></span> Intermediate &nbsp;&nbsp;
+                <span class="level-dot lvl-low"></span> Beginner
             </div>
         }
     </div>
