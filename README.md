@@ -2,7 +2,6 @@
 
 A personal portfolio website with its own admin panel, built with **ASP.NET Core MVC** and **Entity Framework Core (Code First)**. Every section of the public site is managed from the admin panel and stored in SQL Server.
 
-> Developed as the 1st project (Portfolio Case) of the M&Y Yazılım Eğitim Akademi ASP.NET Core MVC program, 12th term.
 
 <!--
 Screenshots: add images to a docs/screenshots folder and uncomment the lines below.
